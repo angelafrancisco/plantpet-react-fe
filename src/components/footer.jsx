@@ -27,7 +27,7 @@ const Footer = () => {
                     </ul>
                 </div>
                 <div className="footer-container bottom">
-                    <Link to="/" className="footer-logo"><img src="img/favicon.ico" alt="PlantPet Logo" />PlantPet</Link>
+                    <Link to="/" className="footer-logo"><img src="image/favicon.ico" alt="PlantPet Logo" />PlantPet</Link>
                     <p className="footer-text">&#169; PlantPet 2022</p>
                 </div>
             </div>

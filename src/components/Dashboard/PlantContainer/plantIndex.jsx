@@ -21,7 +21,6 @@ const PlantIndex = (props) => {
     }
     return (
         <div className="plant-index-container" key={props.plant._id}>
-            {/* <img src={props.plant.image} alt="plant photo" className="plant-index-img" /> */}
             <div className="plant-index-img" style={{ backgroundImage: `url(${props.plant.image})` }}></div>
             <div className="plant-index-box">
                 <div className="plant-index-text-box">
