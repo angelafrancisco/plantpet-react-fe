@@ -40,6 +40,18 @@ Hosted via Heroku: https://plantpet.herokuapp.com/
 - User can complete watering tasks in their "My Tasks" section, as they are auto-generated after creating a new plant.
 
 
+## Wireframing
+
+- Homepage
+![Wireframe-Home](/public/images/PlantPet%20App%20Wireframming_Home.png "Homepage")
+
+- Login/Register
+![Wireframe-Register](/public/images/PlantPet%20App%20Wireframming_register.png "User Register Page")
+
+- User Home Dashboard
+![Wireframe-User-Dashboard](/public/images/PlantPet%20App%20Wireframming_dashboard.png "User Dashboard")
+
+
 ## GA Project Requirements (MVP)
 
 - A full-stack application (React + Python/Django)

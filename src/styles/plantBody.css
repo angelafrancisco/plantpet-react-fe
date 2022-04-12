@@ -1,0 +1,131 @@
+.content-wrapper {
+    padding-bottom: 300px;
+}
+
+.section-header {
+    color: var(--header-color);
+    margin-top: 30px;
+}
+
+.section-header.task {
+    padding: 0 100px;
+}
+
+.section-header.plants {
+    padding-left: 20px;
+}
+
+.btn-section {
+    display: flex;
+}
+
+.btn-section.task {
+    padding-left: 80px;
+}
+
+.btn-section.plants {
+    justify-content: left;
+}
+
+.grave {
+    font-size: 12px;
+}
+
+button.edit,
+button.update {
+    margin-bottom: 0;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.grid-container.task {
+    padding: 0 30px 0 100px;
+}
+
+.grid-container.plants {
+    padding: 0 100px 0 20px;
+}
+
+.plant-index-container {
+    border: var(--outline-color);
+    background-color: var(--outline-bg-color);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 10px;
+}
+
+.plant-index-img {
+    border-radius: var(--img-radius);
+    height: 200px;
+    width: 200px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.plant-index-img.task {
+    height: 100px;
+    width: 100px;
+}
+
+.plant-index-box,
+.plant-index-text-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.plant-index-box {
+    justify-content: center;
+}
+
+.plant-index-text-box {
+    justify-content: center;
+    padding-left: 20px;
+}
+
+.plant-text-name {
+    margin-bottom: 10px;
+}
+
+.plant-text.type {
+    font-style: italic;
+}
+
+.modal {
+    background-color: var(--outline-bg-color);
+    color: var(--outline-txt-color);
+    border: var(--outline-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 200px auto;
+    overflow: hidden;
+    padding: 25px;
+    max-width: 500px;
+}
+
+.overlay-modal {
+    background: rgba(255, 255, 255, 0.8);
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input,
+select {
+    border: var(--outline-color);
+    height: 20px;
+    margin: 5px 0;
+}
