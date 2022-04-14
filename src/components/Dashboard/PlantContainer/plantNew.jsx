@@ -6,11 +6,10 @@ const PlantNew = (props) => {
         name: "",
         type: "",
         image: "",
-        potSize: "",
-        roomName: "",
+        size: "",
+        room: "",
         direction: "",
-        userNotes: "",
-        task: { completed: false, waterSchedule: 7 }
+        notes: "",
     }
     const [showing, setShowing] = useState(false);
     const [isValidState, setIsValidState] = useState({ valid: true, message: "" });
@@ -53,18 +52,17 @@ const PlantNew = (props) => {
                     <form onSubmit={submitNewPlant}>
                         {isValidState.valid ? null : <p className='form-error'>{isValidState.message}</p>}
                         {props.newPlantServerError ? <p className='form-error'>{props.newPlantServerError}</p> : null}
-                        <label for="name">Plant Name: </label>
-                        <input onChange={handleInputChange} type="text" name="name" value={newPlant.name} />
-                        <label for="type">Plant Type: </label>
+                        <label htmlFor="name">Plant Name: <span className='required-field'>*</span></label>
+                        <input onChange={handleInputChange} type="text" name="name" value={newPlant.name} placeholder="nickname or plant type"/>
+                        <label htmlFor="type">Plant Type: <span className='required-field'>*</span></label>
                         <input onChange={handleInputChange} type="text" name="type" value={newPlant.type} placeholder="i.e. succulent, cactus, etc." />
-                        <label for="image">Image url: </label>
+                        <label htmlFor="image">Image URL: </label>
                         <input onChange={handleInputChange} type="text" name="image" value={newPlant.image} />
-                        <label for="potSize">Pot Size (in): </label>
-                        <input onChange={handleInputChange} type="number" name="potSize" value={newPlant.potSize} />
-                        <label for="roomName">Location: </label>
-                        <input onChange={handleInputChange} type="text" name="roomName" value={newPlant.roomName} />
-                        <label for="direction">Window Direction: </label>
-                        {/* <input onChange={handleInputChange} type="text" name="direction" value={newPlant.direction} /> */}
+                        <label htmlFor="potSize">Pot Size (in): <span className='required-field'>*</span></label>
+                        <input onChange={handleInputChange} type="number" name="size" value={newPlant.size} />
+                        <label htmlFor="roomName">Location: </label>
+                        <input onChange={handleInputChange} type="text" name="room" value={newPlant.room} placeholder="i.e. Office, Living Room, etc."/>
+                        <label htmlFor="direction">Window Direction: </label>
                         <select name="direction" required value={newPlant.direction} onChange={handleInputChange}>
                             <option value="" disabled>-Select-</option>
                             <option value="North">North</option>
@@ -72,8 +70,8 @@ const PlantNew = (props) => {
                             <option value="East">East</option>
                             <option value="West">West</option>
                         </select>
-                        <label for="notes">Notes: </label>
-                        <input onChange={handleInputChange} type="text" name="userNotes" value={newPlant.userNotes} />
+                        <label htmlFor="notes">Notes: </label>
+                        <input onChange={handleInputChange} type="text" name="notes" value={newPlant.notes} />
                         <button type="submit" className="solid-btn">Add Plant!</button>
                     </form>
                 </div >
