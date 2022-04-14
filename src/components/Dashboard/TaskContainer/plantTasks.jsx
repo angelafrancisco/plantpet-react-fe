@@ -1,6 +1,6 @@
 const PlantTasks = (props) => {
     const completeTask = () => {
-        props.updateTask(props.plant._id, { ...props.plant, task: { ...props.plant.task, completed: true } })
+        props.updateTask(props.plant.id, { ...props.plant, task: { ...props.plant.task, completed: true } })
     }
     return (
         <>

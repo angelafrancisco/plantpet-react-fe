@@ -8,8 +8,8 @@ const TaskContainer = (props) => {
     // UPDATE
     const updateTask = async (idToUpdate, taskToUpdate) => {
         try {
-            // const apiResponse = await fetch(`http://localhost:3001/plants/${idToUpdate}`, {
-            const apiResponse = await fetch(`https://plantpet-django-be.herokuapp.com/plants/${idToUpdate}`, {
+            const apiResponse = await fetch(`http://localhost:8000/plants/${idToUpdate}/`, {
+            // const apiResponse = await fetch(`https://plantpet-django-be.herokuapp.com/plants/${idToUpdate}/`, {
                 method: "PUT",
                 body: JSON.stringify(taskToUpdate),
                 headers: {
@@ -19,7 +19,7 @@ const TaskContainer = (props) => {
             const parsedResponse = await apiResponse.json();
             console.log(parsedResponse);
             if (parsedResponse.success) {
-                const newPlants = props.plants.map(plant => plant._id === idToUpdate ? taskToUpdate : plant)
+                const newPlants = props.plants.map(plant => plant.id === idToUpdate ? taskToUpdate : plant)
                 props.setPlants(newPlants)
             } else {
                 props.setRequestError(parsedResponse.data);
@@ -48,7 +48,7 @@ const TaskContainer = (props) => {
                         return (
                             !plant.task.completed ?
                                 <PlantTasks
-                                    key={plant._id}
+                                    key={plant.id}
                                     plant={plant}
                                     updateTask={updateTask}
                                 ></PlantTasks>
