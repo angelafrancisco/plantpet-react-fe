@@ -10,7 +10,6 @@ const PlantContainer = (props) => {
     const createNewPlant = async (newPlant) => {
         try {
             // const apiResponse = await fetch("http://localhost:3001/plants", {
-            // const apiResponse = await fetch("https://plantpet-api.herokuapp.com/plants", {
             const apiResponse = await fetch("https://plantpet-django-be.herokuapp.com/plants", {
                 method: "POST",
                 body: JSON.stringify(newPlant),
@@ -37,7 +36,6 @@ const PlantContainer = (props) => {
     const updatePlant = async (idToUpdate, plantToUpdate) => {
         try {
             // const apiResponse = await fetch(`http://localhost:3001/plants/${idToUpdate}`, {
-            // const apiResponse = await fetch(`https://plantpet-api.herokuapp.com/plants/${idToUpdate}`, {
             const apiResponse = await fetch(`https://plantpet-django-be.herokuapp.com/plants/${idToUpdate}`, {
                 method: "PUT",
                 body: JSON.stringify(plantToUpdate),
@@ -62,7 +60,6 @@ const PlantContainer = (props) => {
     const deletePlant = async (idToDelete) => {
         try {
             // const apiResponse = await fetch(`http://localhost:3001/plants/${idToDelete}`, {
-            // const apiResponse = await fetch(`https://plantpet-api.herokuapp.com/plants/${idToDelete}`, {
             const apiResponse = await fetch(`https://plantpet-django-be.herokuapp.com/plants/${idToDelete}`, {
                 method: "DELETE"
             })

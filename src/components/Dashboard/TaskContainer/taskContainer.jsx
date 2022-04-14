@@ -9,7 +9,6 @@ const TaskContainer = (props) => {
     const updateTask = async (idToUpdate, taskToUpdate) => {
         try {
             // const apiResponse = await fetch(`http://localhost:3001/plants/${idToUpdate}`, {
-            // const apiResponse = await fetch(`https://plantpet-api.herokuapp.com/plants/${idToUpdate}`, {
             const apiResponse = await fetch(`https://plantpet-django-be.herokuapp.com/plants/${idToUpdate}`, {
                 method: "PUT",
                 body: JSON.stringify(taskToUpdate),

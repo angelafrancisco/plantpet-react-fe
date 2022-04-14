@@ -9,7 +9,7 @@ const Home = () => {
                     <h1 className="home-heading">A community for the plant-obsessed, plant newbies, and aspiring plant parents.</h1>
                     <Link to="/register" className="solid-btn">Join Today</Link>
                 </div>
-                <img src="./image/home.jpg" alt="mini cactus" className="home-img" />
+                <img src="./images/home.jpg" alt="mini cactus" className="home-img" />
             </div>
             <Features></Features>
         </div>

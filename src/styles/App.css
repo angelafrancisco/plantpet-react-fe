@@ -60,7 +60,7 @@ button.outline-btn {
 }
 
 .hero {
-    background-image: url("/public/img/hero.jpg");
+    background-image: url("/public/images/hero.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

@@ -9,7 +9,7 @@ const Header = (props) => {
     return (
         <nav>
             <div className="nav-container">
-                <Link to="/" className="Logo"><img src="image/favicon.ico" alt="PlantPet Logo" />PlantPet</Link>
+                <Link to="/" className="Logo"><img src="favicon.ico" alt="PlantPet Logo" />PlantPet</Link>
             </div>
             <div className="nav-container">
                 {/* mobile hamburger nav */}

@@ -11,7 +11,6 @@ const Dashboard = () => {
         const getPlants = async () => {
             try {
                 // const plants = await fetch("http://localhost:3001/plants");
-                // const plants = await fetch("https://plantpet-api.herokuapp.com/plants");
                 const plants = await fetch("https://plantpet-django-be.herokuapp.com/plants");
                 const parsedPlants = await plants.json();
                 setPlants(parsedPlants.data);
