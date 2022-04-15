@@ -6,7 +6,7 @@ import PlantIndex from "./plantIndex";
 const PlantContainer = (props) => {
     const [newPlantServerError, setNewPlantServerError] = useState("");
 
-    // CREATE
+// CREATE PLANT
     const createNewPlant = async (newPlant) => {
         try {
             const apiResponse = await fetch("http://localhost:8000/plants/", {
@@ -22,68 +22,26 @@ const PlantContainer = (props) => {
                 props.setPlants([...props.plants, newPlant]);
             } else {
                 setNewPlantServerError(parsedResponse);
-                // for future could: refactor state from newPlantForm child to here, this is where we'd know if it worked or not
             }
         } catch (err) {
             console.log(err)
         }
     }
 
-    // UPDATE
-    const updatePlant = async (idToUpdate, plantToUpdate) => {
-        try {
-            const apiResponse = await fetch(`http://localhost:8000/plants/${idToUpdate}/`, {
-            // const apiResponse = await fetch(`https://plantpet-django-be.herokuapp.com/plants/${idToUpdate}/`, {
-                method: "PUT",
-                body: JSON.stringify(plantToUpdate),
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            })
-            const parsedResponse = await apiResponse.json();
-            if (parsedResponse) {
-                const newPlants = props.plants.map(plant => plant.id === idToUpdate ? plantToUpdate : plant)
-                props.setPlants(newPlants)
-            } else {
-                props.setRequestError(parsedResponse);
-            }
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
-    // DELETE
-    const deletePlant = async (idToDelete) => {
-        try {
-            const apiResponse = await fetch(`http://localhost:8000/plants/${idToDelete}/`, {
-            // const apiResponse = await fetch(`https://plantpet-django-be.herokuapp.com/plants/${idToDelete}/`, {
-                method: "DELETE"
-            })
-            const parsedResponse = await apiResponse.json();
-            console.log(parsedResponse);
-            if (parsedResponse) {
-                const newPlants = props.plants.filter(plant => plant.id !== idToDelete);
-                props.setPlants(newPlants);
-            } else {
-                console.log(`Unable to delete Plant #${idToDelete}`)
-            }
-        } catch (err) {
-            console.log(err);
-        }
-        console.log(`Deleting plant ID# ${idToDelete}`);
-    }
-    // console.log(props.plants.length)
     return (
         <div className="plant-container">
             <h2 className="section-header plants">My Plants</h2>
+            {/* Buttons for New Plant, Plant Graveyard */}
             <div className="btn-section plants">
                 <PlantNew
                     createNewPlant={createNewPlant}
                     newPlantServerError={newPlantServerError}
+                    setNewPlantServerError={setNewPlantServerError}
                 ></PlantNew>
                 {/* link placeholder */}
                 <Link to='/dashboard' className="outline-btn grave">Plant Graveyard</Link>
             </div>
+            {/* Section displaying Plant Index */}
             {props.plants.length > 0 ?
                 <div className="grid-container plants">
                     {props.plants.map((plant) => {

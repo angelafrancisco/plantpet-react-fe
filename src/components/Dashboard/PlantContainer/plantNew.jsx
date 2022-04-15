@@ -45,6 +45,7 @@ const PlantNew = (props) => {
     }
     return (
         <>
+            <button onClick={toggleShowing} className="solid-btn">Add Plant!</button>
             {/* modal open to view new plant form */}
             <PlantModal isOpen={showing}>
                 <div className="new-plant-form">
@@ -76,7 +77,6 @@ const PlantNew = (props) => {
                     </form>
                 </div >
             </PlantModal>
-            <button onClick={toggleShowing} className="solid-btn">Add Plant!</button>
         </>
     )
 }

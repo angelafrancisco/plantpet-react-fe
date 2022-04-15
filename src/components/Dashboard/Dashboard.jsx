@@ -6,27 +6,38 @@ import PlantContainer from './PlantContainer/plantContainer';
 const Dashboard = () => {
     const [requestError, setRequestError] = useState("");
     const [plants, setPlants] = useState([]);
-// GET
+
+// GET PLANTS
     useEffect(() => {
         const getPlants = async () => {
             try {
-                const plants = await fetch("http://localhost:8000/plants/");
+                const apiResponse = await fetch("http://localhost:8000/plants/");
                 // const plants = await fetch("https://plantpet-django-be.herokuapp.com/plants/");
-                const parsedPlants = await plants.json();
+                const parsedResponse = await apiResponse.json();
                 // setPlants(parsedPlants.data);
-                setPlants(parsedPlants);
+                setPlants(parsedResponse);
             } catch (err) {
                 console.log(err);
             }
         }
         getPlants()
     }, []);
+
     return (
         <>
             <Hero></Hero>
             <div className="content-wrapper">
-                {/* <TaskContainer plants={plants} setPlants={setPlants} requestError={requestError}></TaskContainer> */}
-                <PlantContainer plants={plants} setPlants={setPlants} requestError={requestError}></PlantContainer>
+                {/* <TaskContainer 
+                    plants={plants} 
+                    setPlants={setPlants} 
+                    requestError={requestError}
+                ></TaskContainer> */}
+                <PlantContainer 
+                    plants={plants} 
+                    setPlants={setPlants}
+                    requestError={requestError}
+                    setRequestError={setRequestError}
+                ></PlantContainer>
             </div>
         </>
     )
