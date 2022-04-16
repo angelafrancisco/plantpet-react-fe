@@ -14,6 +14,7 @@ const PlantNew = (props) => {
     const [showing, setShowing] = useState(false);
     const [isValidState, setIsValidState] = useState({ valid: true, message: "" });
     const [newPlant, setNewPlant] = useState(initialPlantObject);
+
     const toggleShowing = () => {
         setShowing(!showing)
     }
@@ -45,6 +46,7 @@ const PlantNew = (props) => {
     }
     return (
         <>
+            <button onClick={toggleShowing} className="solid-btn">Add Plant!</button>
             {/* modal open to view new plant form */}
             <PlantModal isOpen={showing}>
                 <div className="new-plant-form">
@@ -76,7 +78,6 @@ const PlantNew = (props) => {
                     </form>
                 </div >
             </PlantModal>
-            <button onClick={toggleShowing} className="solid-btn">Add Plant!</button>
         </>
     )
 }
