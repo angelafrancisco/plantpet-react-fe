@@ -11,8 +11,9 @@ const PlantStatusContainer = () => {
     const [plant, setPlant]= useState([]);
     const [status, setStatus] = useState([]);
     const [newStatusServerError, setNewStatusServerError] = useState("");
+    const [singlePlantStatus, setSinglePlantStatus] = useState([]);
 
-// GET INFO ON 1 PLANT + STATUS
+// GET INFO ON 1 PLANT + ALL STATUS
     useEffect(()=>{
         const getPlantDetails = async ()=>{
             try {
@@ -32,11 +33,17 @@ const PlantStatusContainer = () => {
                 console.log(err);
             }
         }
-        getPlantDetails(id)
-        getPlantStatus(id)
-    }, []);
+        getPlantDetails()
+        getPlantStatus()
+    }, [id]);
 
-    // UPDATE 1 PLANT
+// GET SINGLE PLANT STATUS
+    useEffect(()=>{
+        setSinglePlantStatus(status.filter(pstatus => pstatus.plant === id))
+            
+    }, [status, id])
+
+// UPDATE 1 PLANT
     const updatePlant = async (plantToUpdate) => {
         try {
             const apiResponse = await fetch(`${apiUrl}/plants/${id}/`, {
@@ -82,7 +89,7 @@ const PlantStatusContainer = () => {
         console.log(`Deleting plant ID# ${id}`);
     }
 
-    // CREATE STATUS
+// CREATE STATUS
     const createNewStatus = async (newStatus) => {
         try {
             const apiResponse = await fetch(`${apiUrl}/status/`, {
@@ -161,39 +168,36 @@ const PlantStatusContainer = () => {
                         deletePlant={deletePlant}
                     ></PlantDetails>
                 </div>
-                    <div className="plant-container">
-                        <h2 className="section-header plants">Plant Status:</h2>
-                        <div className="btn-section plants">
-                            <StatusNew
-                                plant={plant}
-                                createNewStatus={createNewStatus}
-                                newStatusServerError={newStatusServerError}
-                            ></StatusNew>
-                        </div>
-                        {status.length > 0 ?
-                            <div className="grid-container plants">
-                                {status.filter( status => status.plant === id ) ? // filtering for only status' matching plant id 
-                                    <StatusDetails
-                                            key={status.id}
-                                            status={status}
-                                            plant={plant}
-                                            updateStatus={updateStatus}
-                                            deleteStatus={deleteStatus}
-                                        ></StatusDetails>
-                                :
-                                    <div className="message-box">
-                                        <h3 className="message-text">Looks like you haven't added a new status for this plant yet!</h3>
-                                    </div>
-                                }
-                            </div>
-                        :
-                            <div className="grid-container plants">
-                                <div className="message-box">
-                                    <h3 className="message-text">Looks like you haven't added a new status for this plant yet!</h3>
-                                </div>
-                            </div>
-                        }
+                <div className="plant-container">
+                    <h2 className="section-header plants">Plant Status:</h2>
+                    <div className="btn-section plants">
+                        <StatusNew
+                            plant={plant}
+                            createNewStatus={createNewStatus}
+                            newStatusServerError={newStatusServerError}
+                        ></StatusNew>
                     </div>
+
+                    {singlePlantStatus.length > 0 ?
+                        <div className="grid-container plants">
+                            {singlePlantStatus.map(pstatus => 
+                                <StatusDetails
+                                    key={pstatus.id}
+                                    status={pstatus}
+                                    plant={plant}
+                                    updateStatus={updateStatus}
+                                    deleteStatus={deleteStatus}
+                                ></StatusDetails>
+                            )}
+                        </div>
+                    :
+                        <div className="grid-container plants">
+                            <div className="message-box">
+                                <h3 className="message-text">Looks like you haven't added a new status for this plant yet!</h3>
+                            </div>
+                        </div>
+                    }
+                </div>
             </div>
         </>
     )
