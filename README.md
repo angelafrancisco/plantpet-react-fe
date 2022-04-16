@@ -12,13 +12,14 @@ PlantPet - A full-stack web application for the plant obsessed, plant newbies, a
 
 ## Deployed Website
 
-Hosted via Heroku: https://plantpet.herokuapp.com/
+Hosted via Heroku: 
+https://plantpet.herokuapp.com/
 
 
 ## Technology
 
-- React
 - HTML | CSS | Javascript
+- React
 - Python | Django
 
 
