@@ -1,13 +1,14 @@
 import { useState } from 'react';
-import PlantModal from './plantModal';
+import PlantModal from "../PlantContainer/plantModal";
 
 const StatusNew = (props) =>{
     const initialStatusObject = {
-        // plant: props.status.plant ?,
+        plant: props.plant.id,
         created: "", // is this autocreated?
         health: "",
         notes: "",
     }
+
     const [showing, setShowing] = useState(false);
     const [isValidState, setIsValidState] = useState({ valid: true, message: "" });
     const [newStatus, setNewStatus] = useState(initialStatusObject);
@@ -23,7 +24,7 @@ const StatusNew = (props) =>{
     const submitNewStatus = (e) => {
         e.preventDefault()
         let validSubmission = true;
-        if (newStatus.type.length < 2) {
+        if (newStatus.length < 2) {
             setIsValidState({
                 valid: false,
                 message: "Plant health is required."
@@ -51,12 +52,9 @@ const StatusNew = (props) =>{
                         {isValidState.valid ? null : <p className='form-error'>{isValidState.message}</p>}
                         {props.newStatusServerError ? <p className='form-error'>{props.newStatusServerError}</p> : null}
                         <label htmlFor="name">Plant Name:</label>
-                        {/* ADD READ ONLY FIELD FOR PLANT NAME? plant.name */}
-                        {/* NEED TO PASS PROPS plant.name, plant.id */}
-                        <input type="text" name="plant" />
+                        <input type="text" name="plant" readOnly value={newStatus.plant}/>
                         <label htmlFor="type">Date: </label>
-                        {/* ADD READ ONLY FIELD HERE FOR DATE */}
-                        <input type="text" name="created" />
+                        <input type="text" name="created" readOnly value={newStatus.created}/>
                         <label htmlFor="health">Current Plant Health:<span className='required-field'>*</span></label>
                         <select name="health" required value={newStatus.health} onChange={handleInputChange}>
                             <option value="" disabled>-Select-</option>

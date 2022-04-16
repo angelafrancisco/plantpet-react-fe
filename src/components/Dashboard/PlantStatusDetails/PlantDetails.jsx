@@ -1,5 +1,5 @@
 import { useState } from "react";
-import PlantModal from "./plantModal";
+import PlantModal from "../PlantContainer/plantModal";
 
 const PlantDetails = (props) =>{
     const [showing, setShowing] = useState(false);
@@ -20,8 +20,8 @@ const PlantDetails = (props) =>{
         setShowing(false);
     }
     return(
-        <div className="plant-index-container" key={props.plant.id}>
-            <div className="plant-index-img" style={{ backgroundImage: `url(${props.plant.image || "./images/default-plant.png"})` }}></div>
+        <div className="plant-index-container">
+            <div className="plant-index-img" style={{ backgroundImage: `url(${props.plant.image || "../../images/default-plant.png"})` }}></div>
             <div className="plant-index-box">
                 <div className="plant-index-text-box">
                     <h3 className="plant-text-name">{props.plant.name}</h3>

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import PlantTasks from "./plantTasks";
+import apiUrl from "../../../apiConfig";
 
 const TaskContainer = (props) => {
     // set up function to check through every plant in array
@@ -8,8 +9,7 @@ const TaskContainer = (props) => {
     // UPDATE
     const updateTask = async (idToUpdate, taskToUpdate) => {
         try {
-            const apiResponse = await fetch(`http://localhost:8000/plants/${idToUpdate}/`, {
-            // const apiResponse = await fetch(`https://plantpet-django-be.herokuapp.com/plants/${idToUpdate}/`, {
+            const apiResponse = await fetch(`${apiUrl}/plants/${idToUpdate}/`, {
                 method: "PUT",
                 body: JSON.stringify(taskToUpdate),
                 headers: {

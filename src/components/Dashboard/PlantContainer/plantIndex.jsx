@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 const PlantIndex = (props) => {
+
     return (
         <div className="plant-index-container" key={props.plant.id}>
             <div className="plant-index-img" style={{ backgroundImage: `url(${props.plant.image || "./images/default-plant.png"})` }}></div>
@@ -11,7 +12,7 @@ const PlantIndex = (props) => {
                     <p className="plant-text">Location: {props.plant.room}</p>
                 </div>
                 {/* Link to PlantStatusDetails */}
-                <Link to='/dashboard/plant-details' className="outline-btn grave">More Info</Link>
+                <Link to={`plant/${props.plant.id}`} className="outline-btn grave">More Info</Link>
             </div>
         </div>
     )

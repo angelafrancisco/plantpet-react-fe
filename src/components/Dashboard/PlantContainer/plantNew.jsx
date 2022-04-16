@@ -14,6 +14,7 @@ const PlantNew = (props) => {
     const [showing, setShowing] = useState(false);
     const [isValidState, setIsValidState] = useState({ valid: true, message: "" });
     const [newPlant, setNewPlant] = useState(initialPlantObject);
+
     const toggleShowing = () => {
         setShowing(!showing)
     }

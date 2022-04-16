@@ -1,13 +1,14 @@
 import { useState } from "react";
-import PlantModal from "./plantModal";
+import PlantModal from "../PlantContainer/plantModal";
 
 const StatusDetails = (props) =>{
     const [showing, setShowing] = useState(false);
+    const [isValidState, setIsValidState] = useState({ valid: true, message: "" });
+    const [updateStatus, setUpdateStatus] = useState(props.status);
+
     const toggleShowing = () => {
         setShowing(!showing)
     }
-    const [isValidState, setIsValidState] = useState({ valid: true, message: "" });
-    const [updateStatus, setUpdateStatus] = useState(props.status);
     const handleInputChange = (e) => {
         setUpdateStatus({
             ...updateStatus,
@@ -20,7 +21,7 @@ const StatusDetails = (props) =>{
         setShowing(false);
     }
     return (
-        <div className="plant-index-container" key={props.status.id}>
+        <div className="plant-index-container">
             <div className="plant-index-box">
                 <div className="plant-index-text-box">
                     <p className="plant-text">Date: {props.status.created}</p>
@@ -36,12 +37,9 @@ const StatusDetails = (props) =>{
                         <form onSubmit={submitUpdateStatus}>
                             {isValidState.valid ? null : <p className='form-error'>{isValidState.message}</p>}
                             <label htmlFor="name">Plant Name:</label>
-                            {/* ADD READ ONLY FIELD FOR PLANT NAME? plant.name */}
-                            {/* NEED TO PASS PROPS plant.name, plant.id */}
-                            <input type="text" name="plant" />
+                            <input type="text" name="plant" readOnly value={updateStatus.plant} />
                             <label htmlFor="type">Date: </label>
-                            {/* ADD READ ONLY FIELD HERE FOR DATE */}
-                            <input type="text" name="created" />
+                            <input type="text" name="created" readOnly value={updateStatus.created} />
                             <label htmlFor="health">Current Plant Health: </label>
                             <select name="health" required value={updateStatus.health} onChange={handleInputChange}>
                                 <option value="" disabled>-Select-</option>

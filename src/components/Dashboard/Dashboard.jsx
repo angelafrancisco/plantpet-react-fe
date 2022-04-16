@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import apiUrl from '../../apiConfig';
 import Hero from "./hero"
 import TaskContainer from './TaskContainer/taskContainer';
 import PlantContainer from './PlantContainer/plantContainer';
@@ -11,10 +12,8 @@ const Dashboard = () => {
     useEffect(() => {
         const getPlants = async () => {
             try {
-                const apiResponse = await fetch("http://localhost:8000/plants/");
-                // const plants = await fetch("https://plantpet-django-be.herokuapp.com/plants/");
+                const apiResponse = await fetch(`${apiUrl}/plants/`);
                 const parsedResponse = await apiResponse.json();
-                // setPlants(parsedPlants.data);
                 setPlants(parsedResponse);
             } catch (err) {
                 console.log(err);

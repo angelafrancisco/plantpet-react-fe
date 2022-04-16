@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import apiUrl from "../../../apiConfig";
 import PlantNew from "./plantNew"
 import PlantIndex from "./plantIndex";
 
@@ -9,8 +10,7 @@ const PlantContainer = (props) => {
 // CREATE PLANT
     const createNewPlant = async (newPlant) => {
         try {
-            const apiResponse = await fetch("http://localhost:8000/plants/", {
-            // const apiResponse = await fetch("https://plantpet-django-be.herokuapp.com/plants/", {
+            const apiResponse = await fetch(`${apiUrl}/plants/`, {
                 method: "POST",
                 body: JSON.stringify(newPlant),
                 headers: {
@@ -48,8 +48,6 @@ const PlantContainer = (props) => {
                         return <PlantIndex
                             key={plant.id}
                             plant={plant}
-                            updatePlant={updatePlant}
-                            deletePlant={deletePlant}
                         ></PlantIndex>
                     })}
                 </div>
