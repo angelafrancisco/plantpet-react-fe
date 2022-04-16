@@ -12,7 +12,7 @@ const Dashboard = () => {
     useEffect(() => {
         const getPlants = async () => {
             try {
-                const apiResponse = await fetch(`${apiUrl}/plants/`);
+                const apiResponse = await fetch(`${apiUrl}/plants`);
                 const parsedResponse = await apiResponse.json();
                 setPlants(parsedResponse);
             } catch (err) {

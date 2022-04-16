@@ -32,8 +32,8 @@ const PlantStatusContainer = () => {
                 console.log(err);
             }
         }
-        getPlantDetails()
-        getPlantStatus()
+        getPlantDetails(id)
+        getPlantStatus(id)
     }, []);
 
     // UPDATE 1 PLANT
@@ -47,6 +47,7 @@ const PlantStatusContainer = () => {
                 }
             })
             const parsedResponse = await apiResponse.json();
+            console.log(parsedResponse)
             if (parsedResponse) {
                 // const newPlant = plant.map(plant => plant.id === id ? plantToUpdate : plant)
                 // setPlant(newPlant)
@@ -57,6 +58,7 @@ const PlantStatusContainer = () => {
         } catch (err) {
             console.log(err)
         }
+        console.log(`Updating ${plant.name} Plant # ${id}`);
     }
 
 // DELETE 1 PLANT
@@ -153,7 +155,7 @@ const PlantStatusContainer = () => {
                         <Link to="/dashboard" className="solid-btn">Back</Link>
                     </div>
                     <PlantDetails
-                        key={plant.id}
+                        key={id}
                         plant={plant}
                         updatePlant={updatePlant}
                         deletePlant={deletePlant}
@@ -168,22 +170,29 @@ const PlantStatusContainer = () => {
                                 newStatusServerError={newStatusServerError}
                             ></StatusNew>
                         </div>
-                        <div className="grid-container plants">
-                            {/* {status.length > 0 ? */}
-                            {status.filter( status => status.plant === plant.id ) ? // filtering for only status' matching plant id 
-                                <StatusDetails
-                                        key={status.id}
-                                        status={status}
-                                        plant={plant}
-                                        updateStatus={updateStatus}
-                                        deleteStatus={deleteStatus}
-                                    ></StatusDetails>
-                            :
+                        {status.length > 0 ?
+                            <div className="grid-container plants">
+                                {status.filter( status => status.plant === id ) ? // filtering for only status' matching plant id 
+                                    <StatusDetails
+                                            key={status.id}
+                                            status={status}
+                                            plant={plant}
+                                            updateStatus={updateStatus}
+                                            deleteStatus={deleteStatus}
+                                        ></StatusDetails>
+                                :
+                                    <div className="message-box">
+                                        <h3 className="message-text">Looks like you haven't added a new status for this plant yet!</h3>
+                                    </div>
+                                }
+                            </div>
+                        :
+                            <div className="grid-container plants">
                                 <div className="message-box">
                                     <h3 className="message-text">Looks like you haven't added a new status for this plant yet!</h3>
                                 </div>
-                            }
-                        </div>
+                            </div>
+                        }
                     </div>
             </div>
         </>
