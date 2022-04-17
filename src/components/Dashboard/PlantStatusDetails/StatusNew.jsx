@@ -1,12 +1,17 @@
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import PlantModal from "../PlantContainer/plantModal";
 
 const StatusNew = (props) =>{
+    const { id } = useParams();
+    const today = new Date();
+    const currentDate = `${today.getMonth()}/${today.getDate()}/${today.getFullYear()}`;
+    const plantId = parseInt(id)
     const initialStatusObject = {
-        plant: props.plant.id,
-        created: "", // is this autocreated?
+        plant: plantId,
+        created: currentDate,
         health: "",
-        notes: "",
+        notes: ""
     }
 
     const [showing, setShowing] = useState(false);
@@ -14,6 +19,7 @@ const StatusNew = (props) =>{
     const [newStatus, setNewStatus] = useState(initialStatusObject);
     const toggleShowing = () => {
         setShowing(!showing)
+        console.log(props.plant.name)
     }
     const handleInputChange = (e) => {
         setNewStatus({
@@ -41,6 +47,7 @@ const StatusNew = (props) =>{
             setNewStatus(initialStatusObject)
         }
     }
+
     return (
         <>
             <button onClick={toggleShowing} className="solid-btn">Add Status!</button>
@@ -51,10 +58,10 @@ const StatusNew = (props) =>{
                     <form onSubmit={submitNewStatus}>
                         {isValidState.valid ? null : <p className='form-error'>{isValidState.message}</p>}
                         {props.newStatusServerError ? <p className='form-error'>{props.newStatusServerError}</p> : null}
-                        <label htmlFor="name">Plant Name:</label>
-                        <input type="text" name="plant" readOnly value={newStatus.plant}/>
-                        <label htmlFor="type">Date: </label>
-                        <input type="text" name="created" readOnly value={newStatus.created}/>
+                        <label htmlFor="plant">Plant Name: {props.plant.name}</label>
+                        {/* <input type="hidden" name="plant" defaultValue={newStatus.plant}/> */}
+                        <label htmlFor="created">Date: {currentDate}</label>
+                        {/* <input type="hidden" name="created" defaultValue={newStatus.created}/> */}
                         <label htmlFor="health">Current Plant Health:<span className='required-field'>*</span></label>
                         <select name="health" required value={newStatus.health} onChange={handleInputChange}>
                             <option value="" disabled>-Select-</option>

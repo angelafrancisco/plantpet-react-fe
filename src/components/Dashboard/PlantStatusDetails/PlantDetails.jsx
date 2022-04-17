@@ -33,6 +33,7 @@ const PlantDetails = (props) =>{
                 </div>
                 <button onClick={toggleShowing} className="outline-btn edit">Edit</button>
                 <button onClick={() => props.deletePlant(props.plant.id)} className="outline-btn">Delete</button>
+                
                 {/* Modal for EDIT */}
                 < PlantModal isOpen={showing} >
                     <div className="edit-plant-form">
