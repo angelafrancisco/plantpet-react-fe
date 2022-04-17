@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PlantModal from "../PlantContainer/plantModal";
 
 const StatusDetails = (props) =>{
     const [showing, setShowing] = useState(false);
     const [isValidState, setIsValidState] = useState({ valid: true, message: "" });
-    const [updateStatus, setUpdateStatus] = useState(props.status);
+    const [updateStatus, setUpdateStatus] = useState({});
 
+    useEffect(()=>{
+        setUpdateStatus(props.status)
+    }, [props.status])
+    
     const toggleShowing = () => {
         setShowing(!showing)
     }
@@ -24,12 +28,13 @@ const StatusDetails = (props) =>{
         <div className="plant-index-container">
             <div className="plant-index-box">
                 <div className="plant-index-text-box">
-                    <p className="plant-text">Date: {props.status.created}</p>
+                    <p className="plant-text">Date Added: {props.status.created}</p>
                     <p className="plant-text">Plant Health: {props.status.health}</p>
-                    <p className="plant-text">Notes: {props.plant.notes}</p>
+                    <p className="plant-text">Notes: {props.status.notes}</p>
                 </div>
                 <button onClick={toggleShowing} className="outline-btn edit">Edit</button>
                 <button onClick={() => props.deleteStatus(props.status.id)} className="outline-btn">Delete</button>
+                
                 {/* Modal for EDIT */}
                 < PlantModal isOpen={showing} >
                     <div className="edit-plant-form">

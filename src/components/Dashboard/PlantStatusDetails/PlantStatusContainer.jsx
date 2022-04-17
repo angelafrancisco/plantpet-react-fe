@@ -53,14 +53,14 @@ const PlantStatusContainer = () => {
         }
         getPlantDetails()
         if(allStatus){
-            setSinglePlantStatus(allStatus.filter(status => status.plant === id))
+            setSinglePlantStatus(allStatus.filter(status => status.plant === parseInt(id)))
         }
     }, [allStatus, id])
 
 // UPDATE 1 PLANT
-    const updatePlant = async (plantToUpdate) => {
+    const updatePlant = async (idToUpdate, plantToUpdate) => {
         try {
-            const apiResponse = await fetch(`${apiUrl}/plants/${id}/`, {
+            const apiResponse = await fetch(`${apiUrl}/plants/${idToUpdate}/`, {
                 method: "PUT",
                 body: JSON.stringify(plantToUpdate),
                 headers: {
@@ -69,36 +69,39 @@ const PlantStatusContainer = () => {
             })
             const parsedResponse = await apiResponse.json();
             console.log(parsedResponse)
+            setPlant(parsedResponse)
             if (parsedResponse) {
-                const newPlant = plants.map(plant => plant.id === id ? plantToUpdate : plant)
-                setPlant(newPlant)
+                const newPlants = plants.map(plant => plant.id === idToUpdate ? plantToUpdate : plant)
+                // debugger
+                setPlants(newPlants)
             } else {
                 setRequestError(parsedResponse);
             }
         } catch (err) {
             console.log(err)
         }
-        console.log(`Updating ${plant.name} Plant # ${id}`);
+        console.log(`Updating ${plant.name} Plant # ${idToUpdate}`);
     }
 
 // DELETE 1 PLANT
-    const deletePlant = async () => {
+    const deletePlant = async (idToDelete) => {
         try {
-            const apiResponse = await fetch(`${apiUrl}/plants/${id}/`, {
+            const apiResponse = await fetch(`${apiUrl}/plants/${idToDelete}/`, {
                 method: "DELETE"
             })
             const parsedResponse = await apiResponse.json();
             console.log(parsedResponse);
             if (parsedResponse) {
-                const newPlant = plants.filter(plant => plant.id !== id);
-                setPlant(newPlant);
+                const newPlants = plants.filter(plant => plant.id !== idToDelete);
+                setPlants(newPlants);
+                // HOW CAN I REDIRECT BACK TO '/dashboard' page?
             } else {
-                console.log(`Unable to delete Plant #${id}`)
+                console.log(`Unable to delete Plant #${idToDelete}`)
             }
         } catch (err) {
             console.log(err);
         }
-        console.log(`Deleting plant ID# ${id}`);
+        console.log(`Deleting plant ID# ${idToDelete}`);
     }
 
 // CREATE STATUS
@@ -112,12 +115,12 @@ const PlantStatusContainer = () => {
                 }
             })
             const parsedResponse = await apiResponse.json();
+            setSinglePlantStatus(parsedResponse)
             if (parsedResponse) {
                 setAllStatus([...allStatus, newStatus]);
             } else {
                 setNewStatusServerError(parsedResponse);
             }
-            console.log(singlePlantStatus)
         } catch (err) {
             console.log(err)
         }
@@ -135,6 +138,7 @@ const PlantStatusContainer = () => {
             })
             const parsedResponse = await apiResponse.json();
             console.log(parsedResponse)
+            setSinglePlantStatus(parsedResponse)
             if (parsedResponse) {
                 const newStatus = allStatus.map(status => status.id === idToUpdate ? statusToUpdate : status)
                 setAllStatus(newStatus)
@@ -176,7 +180,7 @@ const PlantStatusContainer = () => {
                         <Link to="/dashboard" className="solid-btn">Back</Link>
                     </div>
                     <PlantDetails
-                        key={id}
+                        key={plant.id}
                         plant={plant}
                         updatePlant={updatePlant}
                         deletePlant={deletePlant}
@@ -194,7 +198,7 @@ const PlantStatusContainer = () => {
                     </div>
                     {singlePlantStatus.length > 0 ?
                         <div className="grid-container plants">
-                            {singlePlantStatus.map(status => 
+                            {[...singlePlantStatus].reverse().map(status => 
                                 <StatusDetails
                                     key={status.id}
                                     status={status}

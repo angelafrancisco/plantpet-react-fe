@@ -5,7 +5,7 @@ import PlantModal from "../PlantContainer/plantModal";
 const StatusNew = (props) =>{
     const { id } = useParams();
     const today = new Date();
-    const currentDate = `${today.getMonth()}/${today.getDate()}/${today.getFullYear()}`;
+    const currentDate = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
     const plantId = parseInt(id)
     const initialStatusObject = {
         plant: plantId,
@@ -60,7 +60,7 @@ const StatusNew = (props) =>{
                         {props.newStatusServerError ? <p className='form-error'>{props.newStatusServerError}</p> : null}
                         <label htmlFor="plant">Plant Name: {props.plant.name}</label>
                         {/* <input type="hidden" name="plant" defaultValue={newStatus.plant}/> */}
-                        <label htmlFor="created">Date: {currentDate}</label>
+                        <label htmlFor="created">Date: TODAY</label>
                         {/* <input type="hidden" name="created" defaultValue={newStatus.created}/> */}
                         <label htmlFor="health">Current Plant Health:<span className='required-field'>*</span></label>
                         <select name="health" required value={newStatus.health} onChange={handleInputChange}>
