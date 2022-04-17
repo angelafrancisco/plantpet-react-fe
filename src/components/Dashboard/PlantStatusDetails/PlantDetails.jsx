@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PlantModal from "../PlantContainer/plantModal";
 
 const PlantDetails = (props) =>{
@@ -7,11 +7,17 @@ const PlantDetails = (props) =>{
         setShowing(!showing)
     }
     const [isValidState, setIsValidState] = useState({ valid: true, message: "" });
-    const [updatePlant, setUpdatePlant] = useState(props.plant);
+    const [updatePlant, setUpdatePlant] = useState({});
+
+    useEffect(()=>{
+        setUpdatePlant(props.plant)
+    }, [props.plant])
+
     const handleInputChange = (e) => {
         setUpdatePlant({
             ...updatePlant,
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.value,
+            [props.size]: parseInt(e.target.value)
         })
     }
     const submitUpdatePlant = (e) => {
@@ -19,6 +25,8 @@ const PlantDetails = (props) =>{
         props.updatePlant(props.plant.id, updatePlant);
         setShowing(false);
     }
+    // if(updatePlant){
+    //     console.log(props.plant)
     return(
         <div className="plant-index-container">
             <div className="plant-index-img" style={{ backgroundImage: `url(${props.plant.image || "../../images/default-plant.png"})` }}></div>
@@ -28,7 +36,7 @@ const PlantDetails = (props) =>{
                     <p className="plant-text type">Type: {props.plant.type}</p>
                     <p className="plant-text">Location: {props.plant.room}</p>
                     <p className="plant-text">Window: {props.plant.direction} facing</p>
-                    <p className="plant-text">Pot Size: {props.plant.size}in</p>
+                    <p className="plant-text">Pot Size: {props.plant.size} in.</p>
                     <p className="plant-text">Notes: {props.plant.notes}</p>
                 </div>
                 <button onClick={toggleShowing} className="outline-btn edit">Edit</button>
@@ -47,7 +55,7 @@ const PlantDetails = (props) =>{
                             <label htmlFor="image">Image URL: </label>
                             <input onChange={handleInputChange} type="text" name="image" value={updatePlant.image} />
                             <label htmlFor="potSize">Pot Size (in): <span className='required-field'>*</span></label>
-                            <input onChange={handleInputChange} type="number" name="size" value={updatePlant.size} />
+                            <input onChange={handleInputChange} type="number" name="size" value={parseInt(updatePlant.size)} />
                             <label htmlFor="roomName">Location: </label>
                             <input onChange={handleInputChange} type="text" name="room" value={updatePlant.room} />
                             <label htmlFor="direction">Window Direction: </label>
@@ -67,6 +75,11 @@ const PlantDetails = (props) =>{
             </div>
         </div>
     )
+    // } else{
+    //     return (
+    //         null
+    //     )
+    // }
 }
 
 export default PlantDetails;
