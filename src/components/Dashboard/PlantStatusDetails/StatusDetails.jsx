@@ -38,7 +38,7 @@ const StatusDetails = (props) =>{
                             {isValidState.valid ? null : <p className='form-error'>{isValidState.message}</p>}
                             <label htmlFor="name">Plant Name:</label>
                             <input type="text" name="plant" readOnly value={updateStatus.plant} />
-                            <label htmlFor="type">Date: </label>
+                            <label htmlFor="created">Date: </label>
                             <input type="text" name="created" readOnly value={updateStatus.created} />
                             <label htmlFor="health">Current Plant Health: </label>
                             <select name="health" required value={updateStatus.health} onChange={handleInputChange}>

@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import apiUrl from "../../../apiConfig";
@@ -8,18 +9,20 @@ import StatusDetails from "./StatusDetails";
 
 const PlantStatusContainer = () => {
     const { id } = useParams(); // this is the plant id from Route Link
+    const [plants, setPlants] = useState([]);
     const [plant, setPlant]= useState([]);
-    const [status, setStatus] = useState([]);
+    const [allStatus, setAllStatus] = useState([]);
     const [newStatusServerError, setNewStatusServerError] = useState("");
     const [singlePlantStatus, setSinglePlantStatus] = useState([]);
+    const [requestError, setRequestError] = useState("");
 
-// GET INFO ON 1 PLANT + ALL STATUS
+// GET ALL PLANTS + ALL STATUS
     useEffect(()=>{
-        const getPlantDetails = async ()=>{
+        const getPlants = async () => {
             try {
-                const plantApiResponse = await fetch(`${apiUrl}/plants/${id}`);
-                const parsedPlantResponse = await plantApiResponse.json();
-                setPlant(parsedPlantResponse);
+                const apiResponse = await fetch(`${apiUrl}/plants`);
+                const parsedResponse = await apiResponse.json();
+                setPlants(parsedResponse);
             } catch (err) {
                 console.log(err);
             }
@@ -28,20 +31,31 @@ const PlantStatusContainer = () => {
             try {
                 const statusApiResponse = await fetch(`${apiUrl}/status/`);
                 const parsedStatusResponse = await statusApiResponse.json();
-                setStatus(parsedStatusResponse);
+                setAllStatus(parsedStatusResponse);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        getPlants()
+        getPlantStatus()
+    }, []);
+
+// GET 1 PLANT + ITS STATUS
+    useEffect(()=>{
+        const getPlantDetails = async () => {
+            try {
+                const plantApiResponse = await fetch(`${apiUrl}/plants/${id}`);
+                const parsedPlantResponse = await plantApiResponse.json();
+                setPlant(parsedPlantResponse);
             } catch (err) {
                 console.log(err);
             }
         }
         getPlantDetails()
-        getPlantStatus()
-    }, [id]);
-
-// GET SINGLE PLANT STATUS
-    useEffect(()=>{
-        setSinglePlantStatus(status.filter(pstatus => pstatus.plant === id))
-            
-    }, [status, id])
+        if(allStatus){
+            setSinglePlantStatus(allStatus.filter(status => status.plant === id))
+        }
+    }, [allStatus, id])
 
 // UPDATE 1 PLANT
     const updatePlant = async (plantToUpdate) => {
@@ -56,11 +70,10 @@ const PlantStatusContainer = () => {
             const parsedResponse = await apiResponse.json();
             console.log(parsedResponse)
             if (parsedResponse) {
-                // const newPlant = plant.map(plant => plant.id === id ? plantToUpdate : plant)
-                // setPlant(newPlant)
-                setPlant(plantToUpdate)
-            // } else {
-            //     setRequestError(parsedResponse);
+                const newPlant = plants.map(plant => plant.id === id ? plantToUpdate : plant)
+                setPlant(newPlant)
+            } else {
+                setRequestError(parsedResponse);
             }
         } catch (err) {
             console.log(err)
@@ -77,11 +90,10 @@ const PlantStatusContainer = () => {
             const parsedResponse = await apiResponse.json();
             console.log(parsedResponse);
             if (parsedResponse) {
-            //     const newPlant = plant.filter(plant => plant.id !== idToDelete);
-            //     setPlant(newPlant);
-                setPlant(parsedResponse)
-            // } else {
-            //     console.log(`Unable to delete Plant #${idToDelete}`)
+                const newPlant = plants.filter(plant => plant.id !== id);
+                setPlant(newPlant);
+            } else {
+                console.log(`Unable to delete Plant #${id}`)
             }
         } catch (err) {
             console.log(err);
@@ -101,10 +113,11 @@ const PlantStatusContainer = () => {
             })
             const parsedResponse = await apiResponse.json();
             if (parsedResponse) {
-                setStatus([...status, newStatus]);
+                setAllStatus([...allStatus, newStatus]);
             } else {
                 setNewStatusServerError(parsedResponse);
             }
+            console.log(singlePlantStatus)
         } catch (err) {
             console.log(err)
         }
@@ -121,11 +134,12 @@ const PlantStatusContainer = () => {
                 }
             })
             const parsedResponse = await apiResponse.json();
+            console.log(parsedResponse)
             if (parsedResponse) {
-                const newStatus = status.map(status => status.id === idToUpdate ? statusToUpdate : status)
-                setStatus(newStatus)
-            // } else {
-            //     setRequestError(parsedResponse);
+                const newStatus = allStatus.map(status => status.id === idToUpdate ? statusToUpdate : status)
+                setAllStatus(newStatus)
+            } else {
+                setRequestError(parsedResponse);
             }
         } catch (err) {
             console.log(err)
@@ -141,8 +155,8 @@ const PlantStatusContainer = () => {
             const parsedResponse = await apiResponse.json();
             console.log(parsedResponse);
             if (parsedResponse) {
-                const deleteStatus = status.filter(status => status.id !== idToDelete);
-                setStatus(deleteStatus);
+                const deleteStatus = allStatus.filter(status => status.id !== idToDelete);
+                setAllStatus(deleteStatus);
             } else {
                 console.log(`Unable to delete Status #${idToDelete}`)
             }
@@ -166,6 +180,7 @@ const PlantStatusContainer = () => {
                         plant={plant}
                         updatePlant={updatePlant}
                         deletePlant={deletePlant}
+                        requestError={requestError}
                     ></PlantDetails>
                 </div>
                 <div className="plant-container">
@@ -177,16 +192,16 @@ const PlantStatusContainer = () => {
                             newStatusServerError={newStatusServerError}
                         ></StatusNew>
                     </div>
-
                     {singlePlantStatus.length > 0 ?
                         <div className="grid-container plants">
-                            {singlePlantStatus.map(pstatus => 
+                            {singlePlantStatus.map(status => 
                                 <StatusDetails
-                                    key={pstatus.id}
-                                    status={pstatus}
+                                    key={status.id}
+                                    status={status}
                                     plant={plant}
                                     updateStatus={updateStatus}
                                     deleteStatus={deleteStatus}
+                                    requestError={requestError}
                                 ></StatusDetails>
                             )}
                         </div>
