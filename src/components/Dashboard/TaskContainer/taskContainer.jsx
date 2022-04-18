@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom";
-import PlantTasks from "./plantTasks";
 import apiUrl from "../../../apiConfig";
+import PlantTasks from "./plantTasks";
 
 const TaskContainer = (props) => {
-    // set up function to check through every plant in array
-    const checkIfTasksComplete = props.plants.every(plant => plant.task?.completed);
+    const checkIfTasksComplete = props.plants.every(plant => plant.task);
 
-    // UPDATE
+// == UPDATE PLANT.TASK ====================================================================================== //
     const updateTask = async (idToUpdate, taskToUpdate) => {
         try {
             const apiResponse = await fetch(`${apiUrl}/plants/${idToUpdate}/`, {
@@ -19,20 +18,22 @@ const TaskContainer = (props) => {
             const parsedResponse = await apiResponse.json();
             console.log(parsedResponse);
             if (parsedResponse.success) {
+            // if (parsedResponse) {
                 const newPlants = props.plants.map(plant => plant.id === idToUpdate ? taskToUpdate : plant)
                 props.setPlants(newPlants)
             } else {
                 props.setRequestError(parsedResponse.data);
+                // setNewPlantServerError(parsedResponse);
             }
         } catch (err) {
             console.log(err)
         }
     }
+
     return (
         <div className="task-container">
             <h2 className="section-header task">My Tasks</h2>
             <div className="btn-section task">
-                {/* link placeholders */}
                 <Link to='/dashboard' className="solid-btn">Today</Link>
                 <Link to='/dashboard' className="outline-btn">Upcoming</Link>
             </div>
@@ -46,7 +47,7 @@ const TaskContainer = (props) => {
                 <div className="grid-container task">
                     {props.plants.map((plant) => {
                         return (
-                            !plant.task.completed ?
+                            !plant.task ?
                                 <PlantTasks
                                     key={plant.id}
                                     plant={plant}

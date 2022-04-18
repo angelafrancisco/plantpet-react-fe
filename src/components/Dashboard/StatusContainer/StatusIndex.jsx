@@ -1,14 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import PlantModal from "../PlantContainer/plantModal";
 
-const StatusDetails = (props) =>{
+const StatusIndex = (props) =>{
     const [showing, setShowing] = useState(false);
     const [isValidState, setIsValidState] = useState({ valid: true, message: "" });
-    const [updateStatus, setUpdateStatus] = useState({});
+    const [updateStatus, setUpdateStatus] = useState(props.status);
+    // const [updateStatus, setUpdateStatus] = useState({});
 
-    useEffect(()=>{
-        setUpdateStatus(props.status)
-    }, [props.status])
+    // useEffect(()=>{
+    //     setUpdateStatus(props.status)
+    // }, [props.status])
     
     const toggleShowing = () => {
         setShowing(!showing)
@@ -24,10 +25,24 @@ const StatusDetails = (props) =>{
         props.updateStatus(props.status.id, updateStatus);
         setShowing(false);
     }
+    // function to search through all plants, match plant.id = status.plant and return plant name
+    const findLinkedPlantName = (statusPlantId)=> {
+        return (
+            props.plants.filter((plant) => {
+                plant.id === statusPlantId ?
+                plant.name
+            : null
+        }
+        )
+    )}
+
     return (
         <div className="plant-index-container">
+            {/* To do: add status image here */}
+            {/* <div className="plant-index-img" style={{ backgroundImage: `url("./images/default-plant.png")` }}></div> */}
             <div className="plant-index-box">
                 <div className="plant-index-text-box">
+                    <h3 className="plant-text-name">{findLinkedPlantName(props.status.plant)}</h3>
                     <p className="plant-text">Date Added: {props.status.created}</p>
                     <p className="plant-text">Plant Health: {props.status.health}</p>
                     <p className="plant-text">Notes: {props.status.notes}</p>
@@ -35,24 +50,27 @@ const StatusDetails = (props) =>{
                 <button onClick={toggleShowing} className="outline-btn edit">Edit</button>
                 <button onClick={() => props.deleteStatus(props.status.id)} className="outline-btn">Delete</button>
                 
-                {/* Modal for EDIT */}
+                {/* Modal for UPDATE/EDIT */}
                 < PlantModal isOpen={showing} >
                     <div className="edit-plant-form">
                         <button onClick={toggleShowing} className="outline-btn">X</button>
                         <form onSubmit={submitUpdateStatus}>
                             {isValidState.valid ? null : <p className='form-error'>{isValidState.message}</p>}
-                            <label htmlFor="name">Plant Name:</label>
-                            <input type="text" name="plant" readOnly value={updateStatus.plant} />
-                            <label htmlFor="created">Date: </label>
-                            <input type="text" name="created" readOnly value={updateStatus.created} />
-                            <label htmlFor="health">Current Plant Health: </label>
-                            <select name="health" required value={updateStatus.health} onChange={handleInputChange}>
+                            {/* PLANT NAME - DOES NOT CHANGE */}
+                            <label htmlFor="plant">Plant Name:</label>
+                            <input type="text" name="plant" readOnly value={props.status.plant} placeholder={findLinkedPlantName(props.status.plant)}/>
+                            {/* CREATED */}
+                            <label htmlFor="created">Date:</label>
+                            <input onChange={handleInputChange} type="text" name="created" value={updateStatus.created}/>
+                            {/* HEALTH */}
+                            <label htmlFor="health">Plant Health:<span className='required-field'>*</span></label>
+                            <select onChange={handleInputChange} name="health" required value={updateStatus.health}>
                                 <option value="" disabled>-Select-</option>
                                 <option value="Poor">Poor</option>
                                 <option value="Good">Good</option>
                                 <option value="Excellent">Excellent</option>
                             </select>
-                            <label htmlFor="notes">Notes: </label>
+                            <label htmlFor="notes">Notes:</label>
                             <input onChange={handleInputChange} type="text" name="notes" value={updateStatus.notes} />
                             <button type="submit" className="solid-btn update">Update</button>
                         </form>
@@ -63,4 +81,4 @@ const StatusDetails = (props) =>{
     )
 }
 
-export default StatusDetails;
+export default StatusIndex;
