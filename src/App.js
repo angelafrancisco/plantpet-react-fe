@@ -6,7 +6,6 @@ import Home from './components/Home/Home';
 import Register from './components/Home/Register';
 import Login from './components/Home/Login';
 import Dashboard from './components/Dashboard/Dashboard';
-import PlantStatusContainer from './components/Dashboard/PlantStatusDetails/PlantStatusContainer';
 import './styles/App.css';
 import './styles/header.css';
 import './styles/home.css'
@@ -23,7 +22,6 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/dashboard/plant/:id" element={<PlantStatusContainer />} />
           <Route path="/register" element={<Register isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/login" element={<Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
         </Routes>
