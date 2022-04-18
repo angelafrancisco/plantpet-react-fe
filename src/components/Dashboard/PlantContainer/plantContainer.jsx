@@ -17,12 +17,12 @@ const PlantContainer = (props) => {
                     "Content-Type": "application/json"
                 }
             })
-            debugger
+            // debugger
             const parsedResponse = await apiResponse.json();
             console.log(parsedResponse); 
             if (parsedResponse.success) { // this does not render new plant until refresh pg
             // if (parsedResponse) { // this does render plant, but it hasn't been sent to database
-                debugger
+                // debugger
                 props.setPlants([...props.plants, parsedResponse]); 
                 console.log(props.setPlants([...props.plants, parsedResponse])); // this is returning 'undefined'
             } else {
@@ -43,7 +43,7 @@ const PlantContainer = (props) => {
                     "Content-Type": "application/json"
                 }
             })
-            debugger
+            // debugger
             const parsedResponse = await apiResponse.json();
             console.log(parsedResponse)
             // console.log(parsedResponse.success);
@@ -68,7 +68,7 @@ const PlantContainer = (props) => {
             const apiResponse = await fetch(`${apiUrl}/api/plants/${idToDelete}/`, {
                 method: "DELETE"
             })
-            debugger
+            // debugger
             const parsedResponse = await apiResponse.json();
             console.log(parsedResponse);
             // console.log(parsedResponse.success);
