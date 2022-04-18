@@ -133,3 +133,9 @@ select {
     color: #ff0000;
     font-style: italic;
 }
+.required-text {
+    margin-bottom: 10px;
+}
+.small-text {
+    font-size: 12px;
+}
