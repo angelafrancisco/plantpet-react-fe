@@ -27,13 +27,8 @@ const StatusIndex = (props) =>{
     }
     // function to search through all plants, match plant.id = status.plant and return plant name
     const findLinkedPlantName = (statusPlantId)=> {
-        return (
-            props.plants.filter((plant) => {
-                plant.id === statusPlantId ?
-                plant.name
-            : null
-        }
-        )
+        return ( 
+            props.plants.filter(plant => plant.id === statusPlantId ? plant.name : null )
     )}
 
     return (
