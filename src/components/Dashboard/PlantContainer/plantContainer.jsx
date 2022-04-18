@@ -10,44 +10,45 @@ const PlantContainer = (props) => {
 // == CREATE PLANT ======================================================================================== //
     const createNewPlant = async (newPlant) => {
         try {
-            const apiResponse = await fetch(`${apiUrl}/plants/`, {
-                method: 'POST',
+            const apiResponse = await fetch(`${apiUrl}/api/plants/`, {
+                method: "POST",
                 body: JSON.stringify(newPlant),
                 headers: {
-                    'Content-Type': 'application/json'
+                    "Content-Type": "application/json"
                 }
             })
+            debugger
             const parsedResponse = await apiResponse.json();
             console.log(parsedResponse); 
-            // console.log(parsedResponse.success);
-            // if (parsedResponse.success) {
-            if (parsedResponse) {
-                props.setPlants([...props.plants, newPlant]); // this is returning 'undefined' ?
-                console.log(props.setPlants([...props.plants, newPlant]))
+            if (parsedResponse.success) { // this does not render new plant until refresh pg
+            // if (parsedResponse) { // this does render plant, but it hasn't been sent to database
+                debugger
+                props.setPlants([...props.plants, parsedResponse]); 
+                console.log(props.setPlants([...props.plants, parsedResponse])); // this is returning 'undefined'
             } else {
-                // setNewPlantServerError(parsedResponse.data);
                 setNewPlantServerError(parsedResponse);
             }
         } catch (err) {
-            console.log(err)
+            console.log(err);
         }
     }
 
 // == UPDATE PLANT ========================================================================================== //
     const updatePlant = async (idToUpdate, plantToUpdate) => {
         try {
-            const apiResponse = await fetch(`${apiUrl}/plants/${idToUpdate}/`, {
+            const apiResponse = await fetch(`${apiUrl}/api/plants/${idToUpdate}/`, {
                 method: "PUT",
                 body: JSON.stringify(plantToUpdate),
                 headers: {
                     "Content-Type": "application/json"
                 }
             })
+            debugger
             const parsedResponse = await apiResponse.json();
             console.log(parsedResponse)
             // console.log(parsedResponse.success);
-            // if (parsedResponse.success) {
-            if (parsedResponse) {
+            if (parsedResponse.success) {
+            // if (parsedResponse) {
                 const newPlants = props.plants.map(plant => plant.id === idToUpdate ? plantToUpdate : plant)
                 console.log(newPlants)
                 props.setPlants(newPlants)
@@ -64,23 +65,25 @@ const PlantContainer = (props) => {
 // == DELETE PLANT ========================================================================================== //
     const deletePlant = async (idToDelete) => {
         try {
-            const apiResponse = await fetch(`${apiUrl}/plants/${idToDelete}/`, {
+            const apiResponse = await fetch(`${apiUrl}/api/plants/${idToDelete}/`, {
                 method: "DELETE"
             })
+            debugger
             const parsedResponse = await apiResponse.json();
             console.log(parsedResponse);
             // console.log(parsedResponse.success);
-            // if (parsedResponse.success) {
-            if (parsedResponse) {
+            if (parsedResponse.success) {
+            // if (parsedResponse) {
                 const newPlants = props.plants.filter(plant => plant.id !== idToDelete);
                 console.log(newPlants)
                 props.setPlants(newPlants);
             } else {
+                props.setRequestError(parsedResponse);
                 console.log(`Unable to delete Plant #${idToDelete}`)
             }
         } catch (err) {
             console.log(err);
-            props.setRequestError(err.message)
+            // props.setRequestError(err.message)
         }
         console.log(`Deleting plant ID# ${idToDelete}`);
     }

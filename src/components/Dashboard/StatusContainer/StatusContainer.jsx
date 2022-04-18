@@ -1,5 +1,4 @@
 import { useState } from "react";
-// import { Link } from "react-router-dom";
 import apiUrl from "../../../apiConfig";
 import StatusNew from "./StatusNew";
 import StatusIndex from "./StatusIndex";
@@ -28,7 +27,7 @@ const StatusContainer = (props) => {
 // == CREATE STATUS =========================================================================== //
     const createNewStatus = async (newStatus) => {
         try {
-            const apiResponse = await fetch(`${apiUrl}/status/`, {
+            const apiResponse = await fetch(`${apiUrl}/api/status/`, {
                 method: "POST",
                 body: JSON.stringify(newStatus),
                 headers: {
@@ -37,9 +36,8 @@ const StatusContainer = (props) => {
             })
             const parsedResponse = await apiResponse.json();
             console.log(parsedResponse);
-            // console.log(parsedResponse.success);
-            // if (parsedResponse.success) {
-            if (parsedResponse) {
+            if (parsedResponse.success) {
+            // if (parsedResponse) {
                 props.setAllStatus([...props.allStatus, newStatus]);
             } else {
                 // setNewStatusServerError(parsedResponse.data);
@@ -53,7 +51,7 @@ const StatusContainer = (props) => {
 // == UPDATE STATUS ============================================================================================ //
     const updateStatus = async (idToUpdate, statusToUpdate) => {
         try {
-            const apiResponse = await fetch(`${apiUrl}/status/${idToUpdate}/`, {
+            const apiResponse = await fetch(`${apiUrl}/api/status/${idToUpdate}/`, {
                 method: "PUT",
                 body: JSON.stringify(statusToUpdate),
                 headers: {
@@ -63,8 +61,8 @@ const StatusContainer = (props) => {
             const parsedResponse = await apiResponse.json();
             console.log(parsedResponse)
             // console.log(parsedResponse.success);
-            // if (parsedResponse.success) {
-            if (parsedResponse) {
+            if (parsedResponse.success) {
+            // if (parsedResponse) {
                 const newStatus = props.allStatus.map(status => status.id === idToUpdate ? statusToUpdate : status)
                 props.setAllStatus(newStatus)
             } else {
@@ -80,14 +78,14 @@ const StatusContainer = (props) => {
 // == DELETE STATUS =============================================================================================== //
     const deleteStatus = async (idToDelete) => {
         try {
-            const apiResponse = await fetch(`${apiUrl}/status/${idToDelete}/`, {
+            const apiResponse = await fetch(`${apiUrl}/api/status/${idToDelete}/`, {
                 method: "DELETE"
             })
             const parsedResponse = await apiResponse.json();
             console.log(parsedResponse);
             // console.log(parsedResponse.success);
-            // if (parsedResponse.success) {
-            if (parsedResponse) {
+            if (parsedResponse.success) {
+            // if (parsedResponse) {
                 const newStatus = props.allStatus.filter(status => status.id !== idToDelete);
                 props.setAllStatus(newStatus);
             } else {
@@ -105,7 +103,7 @@ const StatusContainer = (props) => {
             {/* Button for New Status */}
             <div className="btn-section plants">
                 <StatusNew
-                    key={`new-status`}
+                    key={`status-new`}
                     plants={props.plants}
                     createNewStatus={createNewStatus}
                     newStatusServerError={newStatusServerError}

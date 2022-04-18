@@ -14,7 +14,7 @@ const Dashboard = () => {
     useEffect(() => {
         const getPlants = async () => {
             try {
-                const apiResponse = await fetch(`${apiUrl}/plants/`);
+                const apiResponse = await fetch(`${apiUrl}/api/plants/`);
                 const parsedResponse = await apiResponse.json();
                 // setPlants(parsedResponse.data);
                 setPlants(parsedResponse);
@@ -24,44 +24,44 @@ const Dashboard = () => {
             }
         }
         getPlants()
-    }, []);
+    }, []);    
 
 // == GET ALL STATUS ======================================================== //
     useEffect(() => {
         const getStatus = async () => {
             try {
-                const statusApiResponse = await fetch(`${apiUrl}/status/`);
-                const statusParsedResponse = await statusApiResponse.json();
+                const apiResponse = await fetch(`${apiUrl}/api/status/`);
+                const parsedResponse = await apiResponse.json();
                 // setAllStatus(statusParsedResponse.data);
-                setAllStatus(statusParsedResponse);
-                console.log(statusParsedResponse);
+                setAllStatus(parsedResponse);
+                console.log(parsedResponse);
             } catch (err) {
                 console.log(err);
             }
         }
         getStatus()
-    }, [])
+    }, []);  
 
     return (
         <>
             <Hero></Hero>
             <div className="content-wrapper">
-                <PlantContainer
-                    key={`plants`}
-                    plants={plants} 
-                    setPlants={setPlants}
-                    requestError={requestError}
-                    setRequestError={setRequestError}
-                ></PlantContainer>
                 <TaskContainer
-                    key={`tasks`}
+                    key={`tasks-container`}
                     plants={plants}
                     setPlants={setPlants}
                     requestError={requestError}
                     setRequestError={setRequestError}
                 ></TaskContainer>
+                <PlantContainer
+                    key={`plants-container`}
+                    plants={plants} 
+                    setPlants={setPlants}
+                    requestError={requestError}
+                    setRequestError={setRequestError}
+                ></PlantContainer>
                 <StatusContainer
-                    key={`status`}
+                    key={`status-container`}
                     plants={plants}
                     setPlants={setPlants}
                     allStatus={allStatus}
