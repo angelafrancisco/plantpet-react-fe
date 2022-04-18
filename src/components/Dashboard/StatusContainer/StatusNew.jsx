@@ -1,21 +1,16 @@
 import { useState } from 'react';
-// import { useParams } from 'react-router-dom';
 import PlantModal from "../PlantContainer/plantModal";
 
 const StatusNew = (props) =>{
-    // const { id } = useParams();
-    // const today = new Date();
-    // const currentDate = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
     const initialStatusObject = {
         plant: "",
         created: "",
         health: "",
         notes: ""
     }
-
+    const [newStatus, setNewStatus] = useState(initialStatusObject);
     const [showing, setShowing] = useState(false);
     const [isValidState, setIsValidState] = useState({ valid: true, message: "" });
-    const [newStatus, setNewStatus] = useState(initialStatusObject);
 
     const toggleShowing = () => {
         setShowing(!showing)

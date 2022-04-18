@@ -1,5 +1,4 @@
 import { useState } from "react";
-// import { Link } from "react-router-dom";
 import PlantModal from "./plantModal";
 
 const PlantIndex = (props) => {
@@ -13,8 +12,7 @@ const PlantIndex = (props) => {
     const handleInputChange = (e) => {
         setUpdatePlant({
             ...updatePlant,
-            [e.target.name]: e.target.value // ,
-            // [props.size]: parseInt(e.target.value)
+            [e.target.name]: e.target.value
         })
     }
     const submitUpdatePlant = (e) => {
@@ -38,8 +36,6 @@ const PlantIndex = (props) => {
                 </div>
                 {/* Link to PlantStatusDetails - TRY AGAIN ANOTHER TIME :'( */}
                 {/* <Link to={`plant/${props.plant.id}`} className="outline-btn grave">More Info</Link> */}
-                <button onClick={toggleShowing} className="outline-btn edit">Edit</button>
-                <button onClick={() => props.deletePlant(props.plant.id)} className="outline-btn">Delete</button>
                 
                 {/* Modal for UPDATE/EDIT */}
                 < PlantModal isOpen={showing} >
@@ -47,7 +43,7 @@ const PlantIndex = (props) => {
                         <button onClick={toggleShowing} className="outline-btn">X</button>
                         <p className='required-text'><span className='required-field'>* <span className='small-text'>required</span></span></p>
                         <form onSubmit={submitUpdatePlant}>
-                            {isValidState.valid ? null : <p className='form-error'>{isValidState.message}</p>}
+                            {isValidState.valid ? null : <p className='form-error'>{setIsValidState(isValidState.message)}</p>}
                             {/* NAME */}
                             <label htmlFor="name">Plant Name:<span className='required-field'>*</span></label>
                             <input onChange={handleInputChange} type="text" name="name" required value={updatePlant.name} />
@@ -59,7 +55,6 @@ const PlantIndex = (props) => {
                             <input onChange={handleInputChange} type="text" name="image" value={updatePlant.image} />
                             {/* SIZE */}
                             <label htmlFor="size">Pot Size (in):<span className='required-field'>*</span></label>
-                            {/* <input onChange={handleInputChange} type="number" name="size" value={parseInt(updatePlant.size)} /> */}
                             <input onChange={handleInputChange} type="number" name="size" required value={updatePlant.size} />
                             {/* ROOM */}
                             <label htmlFor="room">Location:</label>
@@ -80,6 +75,8 @@ const PlantIndex = (props) => {
                         </form>
                     </div>
                 </PlantModal>
+                <button onClick={toggleShowing} className="outline-btn edit">Edit</button>
+                <button onClick={() => props.deletePlant(props.plant.id)} className="outline-btn">Delete</button>
             </div>
         </div>
     )

@@ -8,7 +8,7 @@ const TaskContainer = (props) => {
 // == UPDATE PLANT.TASK ====================================================================================== //
     const updateTask = async (idToUpdate, taskToUpdate) => {
         try {
-            const apiResponse = await fetch(`${apiUrl}/plants/${idToUpdate}/`, {
+            const apiResponse = await fetch(`${apiUrl}/api/plants/${idToUpdate}/`, {
                 method: "PUT",
                 body: JSON.stringify(taskToUpdate),
                 headers: {

@@ -8,10 +8,6 @@ const StatusIndex = (props) =>{
     }
     const [isValidState, setIsValidState] = useState({ valid: true, message: "" });
     const [updateStatus, setUpdateStatus] = useState(props.status);
-
-    // useEffect(()=>{
-    //     setUpdateStatus(props.status)
-    // }, [props.status])
     
     const handleInputChange = (e) => {
         setUpdateStatus({
@@ -41,8 +37,6 @@ const StatusIndex = (props) =>{
                     <p className="plant-text">Health: {props.status.health}</p>
                     <p className="plant-text">Notes: {props.status.notes}</p>
                 </div>
-                <button onClick={toggleShowing} className="outline-btn edit">Edit</button>
-                <button onClick={() => props.deleteStatus(props.status.id)} className="outline-btn">Delete</button>
                 
                 {/* Modal for UPDATE/EDIT */}
                 < PlantModal isOpen={showing} >
@@ -50,7 +44,7 @@ const StatusIndex = (props) =>{
                         <button onClick={toggleShowing} className="outline-btn">X</button>
                         <p className='required-text'><span className='required-field'>* <span className='small-text'>required</span></span></p>
                         <form onSubmit={submitUpdateStatus}>
-                            {isValidState.valid ? null : <p className='form-error'>{isValidState.message}</p>}
+                            {isValidState.valid ? null : <p className='form-error'>{setIsValidState(isValidState.message)}</p>}
                             {/* PLANT NAME - DOES NOT CHANGE */}
                             <label htmlFor="plant">{findLinkedPlantName(props.status.plant)}</label>
                             {/* CREATED */}
@@ -70,6 +64,8 @@ const StatusIndex = (props) =>{
                         </form>
                     </div>
                 </PlantModal>
+                <button onClick={toggleShowing} className="outline-btn edit">Edit</button>
+                <button onClick={() => props.deleteStatus(props.status.id)} className="outline-btn">Delete</button>
             </div>
         </div>
     )

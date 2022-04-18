@@ -1,7 +1,7 @@
 let apiUrl
 
 const apiUrls = {
-    production: "https://plantpet-django-be.herokuapp.com/api",
+    production: "https://plantpet-django-be.herokuapp.com",
     development: "http://localhost:8000"
 }
 if (window.location.hostname === "localhost"){
