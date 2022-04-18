@@ -22,7 +22,8 @@ const PlantContainer = (props) => {
             // console.log(parsedResponse.success);
             // if (parsedResponse.success) {
             if (parsedResponse) {
-                props.setPlants([...props.plants, newPlant]);
+                props.setPlants([...props.plants, newPlant]); // this is returning 'undefined' ?
+                console.log(props.setPlants([...props.plants, newPlant]))
             } else {
                 // setNewPlantServerError(parsedResponse.data);
                 setNewPlantServerError(parsedResponse);
@@ -57,7 +58,7 @@ const PlantContainer = (props) => {
         } catch (err) {
             console.log(err)
         }
-        console.log(`Updating ${props.plant.name} Plant # ${idToUpdate}`);
+        console.log(`Updating ${plantToUpdate.name} Plant # ${idToUpdate}`);
     }
 
 // == DELETE PLANT ========================================================================================== //

@@ -4,13 +4,12 @@ import PlantModal from "./plantModal";
 
 const PlantIndex = (props) => {
     const [showing, setShowing] = useState(false);
-    const [isValidState, setIsValidState] = useState({ valid: true, message: "" });
-    // const [updatePlant, setUpdatePlant] = useState(props.plant);
-    const [updatePlant, setUpdatePlant] = useState({});
-    
     const toggleShowing = () => {
         setShowing(!showing)
     }
+    const [isValidState, setIsValidState] = useState({ valid: true, message: "" });
+    const [updatePlant, setUpdatePlant] = useState(props.plant);
+    
     const handleInputChange = (e) => {
         setUpdatePlant({
             ...updatePlant,
@@ -21,6 +20,7 @@ const PlantIndex = (props) => {
     const submitUpdatePlant = (e) => {
         e.preventDefault();
         props.updatePlant(props.plant.id, updatePlant);
+        // console.log(props.updatePlant(props.plant.id, updatePlant))
         setShowing(false);
     }
 

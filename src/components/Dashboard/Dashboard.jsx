@@ -47,18 +47,21 @@ const Dashboard = () => {
             <Hero></Hero>
             <div className="content-wrapper">
                 <PlantContainer
+                    key={`plants`}
                     plants={plants} 
                     setPlants={setPlants}
                     requestError={requestError}
                     setRequestError={setRequestError}
                 ></PlantContainer>
                 <TaskContainer
+                    key={`tasks`}
                     plants={plants}
                     setPlants={setPlants}
                     requestError={requestError}
                     setRequestError={setRequestError}
                 ></TaskContainer>
                 <StatusContainer
+                    key={`status`}
                     plants={plants}
                     setPlants={setPlants}
                     allStatus={allStatus}

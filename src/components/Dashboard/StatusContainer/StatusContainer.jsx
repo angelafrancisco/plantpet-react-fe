@@ -105,6 +105,7 @@ const StatusContainer = (props) => {
             {/* Button for New Status */}
             <div className="btn-section plants">
                 <StatusNew
+                    key={`new-status`}
                     plants={props.plants}
                     createNewStatus={createNewStatus}
                     newStatusServerError={newStatusServerError}

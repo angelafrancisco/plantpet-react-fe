@@ -3,17 +3,16 @@ import PlantModal from "../PlantContainer/plantModal";
 
 const StatusIndex = (props) =>{
     const [showing, setShowing] = useState(false);
+    const toggleShowing = () => {
+        setShowing(!showing)
+    }
     const [isValidState, setIsValidState] = useState({ valid: true, message: "" });
     const [updateStatus, setUpdateStatus] = useState(props.status);
-    // const [updateStatus, setUpdateStatus] = useState({});
 
     // useEffect(()=>{
     //     setUpdateStatus(props.status)
     // }, [props.status])
     
-    const toggleShowing = () => {
-        setShowing(!showing)
-    }
     const handleInputChange = (e) => {
         setUpdateStatus({
             ...updateStatus,
@@ -53,11 +52,10 @@ const StatusIndex = (props) =>{
                         <form onSubmit={submitUpdateStatus}>
                             {isValidState.valid ? null : <p className='form-error'>{isValidState.message}</p>}
                             {/* PLANT NAME - DOES NOT CHANGE */}
-                            <label htmlFor="plant">Plant Name:</label>
-                            <input type="text" name="plant" readOnly value={props.status.plant} placeholder={findLinkedPlantName(props.status.plant)}/>
+                            <label htmlFor="plant">{findLinkedPlantName(props.status.plant)}</label>
                             {/* CREATED */}
                             <label htmlFor="created">Date:</label>
-                            <input onChange={handleInputChange} type="text" name="created" value={updateStatus.created}/>
+                            <input type="text" name="created" readOnly value={updateStatus.created}/>
                             {/* HEALTH */}
                             <label htmlFor="health">Plant Health:<span className='required-field'>*</span></label>
                             <select onChange={handleInputChange} name="health" required value={updateStatus.health}>
