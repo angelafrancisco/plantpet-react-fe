@@ -7,7 +7,7 @@ import PlantIndex from "./plantIndex";
 const PlantContainer = (props) => {
     const [newPlantServerError, setNewPlantServerError] = useState("");
 
-// CREATE PLANT
+// == CREATE PLANT ======================================================================================== //
     const createNewPlant = async (newPlant) => {
         try {
             const apiResponse = await fetch(`${apiUrl}/plants/`, {
@@ -18,14 +18,66 @@ const PlantContainer = (props) => {
                 }
             })
             const parsedResponse = await apiResponse.json();
-            if (parsedResponse) {
+            console.log(parsedResponse);
+            if (parsedResponse.success) {
+            // if (parsedResponse) {
                 props.setPlants([...props.plants, newPlant]);
             } else {
-                setNewPlantServerError(parsedResponse);
+                setNewPlantServerError(parsedResponse.data);
+                // setNewPlantServerError(parsedResponse);
             }
         } catch (err) {
             console.log(err)
         }
+    }
+
+// == UPDATE PLANT ========================================================================================== //
+    const updatePlant = async (idToUpdate, plantToUpdate) => {
+        try {
+            const apiResponse = await fetch(`${apiUrl}/plants/${idToUpdate}/`, {
+                method: "PUT",
+                body: JSON.stringify(plantToUpdate),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            const parsedResponse = await apiResponse.json();
+            console.log(parsedResponse)
+            // setPlant(parsedResponse)
+            if (parsedResponse.success) {
+            // if (parsedResponse) {
+                const newPlants = props.plants.map(plant => plant.id === idToUpdate ? plantToUpdate : plant)
+                props.setPlants(newPlants)
+            } else {
+                props.setRequestError(parsedResponse.data);
+                // props.setRequestError(parsedResponse);
+            }
+        } catch (err) {
+            console.log(err)
+        }
+        console.log(`Updating ${props.plant.name} Plant # ${idToUpdate}`);
+    }
+
+// == DELETE PLANT ========================================================================================== //
+    const deletePlant = async (idToDelete) => {
+        try {
+            const apiResponse = await fetch(`${apiUrl}/plants/${idToDelete}/`, {
+                method: "DELETE"
+            })
+            const parsedResponse = await apiResponse.json();
+            console.log(parsedResponse);
+            if (parsedResponse.success) {
+            // if (parsedResponse) {
+                const newPlants = props.plants.filter(plant => plant.id !== idToDelete);
+                props.setPlants(newPlants);
+            } else {
+                console.log(`Unable to delete Plant #${idToDelete}`)
+            }
+        } catch (err) {
+            console.log(err);
+            props.setRequestError(err.message)
+        }
+        console.log(`Deleting plant ID# ${idToDelete}`);
     }
 
     return (
@@ -38,7 +90,6 @@ const PlantContainer = (props) => {
                     newPlantServerError={newPlantServerError}
                     setNewPlantServerError={setNewPlantServerError}
                 ></PlantNew>
-                {/* link placeholder */}
                 <Link to='/dashboard' className="outline-btn grave">Plant Graveyard</Link>
             </div>
             {/* Section displaying Plant Index */}
@@ -48,6 +99,8 @@ const PlantContainer = (props) => {
                         return <PlantIndex
                             key={plant.id}
                             plant={plant}
+                            updatePlant={updatePlant}
+                            deletePlant={deletePlant}
                         ></PlantIndex>
                     })}
                 </div>
