@@ -5,8 +5,8 @@ import PlantModal from "./plantModal";
 const PlantIndex = (props) => {
     const [showing, setShowing] = useState(false);
     const [isValidState, setIsValidState] = useState({ valid: true, message: "" });
-    const [updatePlant, setUpdatePlant] = useState(props.plant);
-    // const [updatePlant, setUpdatePlant] = useState({});
+    // const [updatePlant, setUpdatePlant] = useState(props.plant);
+    const [updatePlant, setUpdatePlant] = useState({});
     
     const toggleShowing = () => {
         setShowing(!showing)
@@ -45,6 +45,7 @@ const PlantIndex = (props) => {
                 < PlantModal isOpen={showing} >
                     <div className="edit-plant-form">
                         <button onClick={toggleShowing} className="outline-btn">X</button>
+                        <p className='required-text'><span className='required-field'>* <span className='small-text'>required</span></span></p>
                         <form onSubmit={submitUpdatePlant}>
                             {isValidState.valid ? null : <p className='form-error'>{isValidState.message}</p>}
                             {/* NAME */}

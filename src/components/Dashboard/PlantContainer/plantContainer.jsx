@@ -11,20 +11,21 @@ const PlantContainer = (props) => {
     const createNewPlant = async (newPlant) => {
         try {
             const apiResponse = await fetch(`${apiUrl}/plants/`, {
-                method: "POST",
+                method: 'POST',
                 body: JSON.stringify(newPlant),
                 headers: {
-                    "Content-Type": "application/json"
+                    'Content-Type': 'application/json'
                 }
             })
             const parsedResponse = await apiResponse.json();
-            console.log(parsedResponse);
-            if (parsedResponse.success) {
-            // if (parsedResponse) {
+            console.log(parsedResponse); 
+            // console.log(parsedResponse.success);
+            // if (parsedResponse.success) {
+            if (parsedResponse) {
                 props.setPlants([...props.plants, newPlant]);
             } else {
-                setNewPlantServerError(parsedResponse.data);
-                // setNewPlantServerError(parsedResponse);
+                // setNewPlantServerError(parsedResponse.data);
+                setNewPlantServerError(parsedResponse);
             }
         } catch (err) {
             console.log(err)
@@ -43,14 +44,15 @@ const PlantContainer = (props) => {
             })
             const parsedResponse = await apiResponse.json();
             console.log(parsedResponse)
-            // setPlant(parsedResponse)
-            if (parsedResponse.success) {
-            // if (parsedResponse) {
+            // console.log(parsedResponse.success);
+            // if (parsedResponse.success) {
+            if (parsedResponse) {
                 const newPlants = props.plants.map(plant => plant.id === idToUpdate ? plantToUpdate : plant)
+                console.log(newPlants)
                 props.setPlants(newPlants)
             } else {
-                props.setRequestError(parsedResponse.data);
-                // props.setRequestError(parsedResponse);
+                // props.setRequestError(parsedResponse.data);
+                props.setRequestError(parsedResponse);
             }
         } catch (err) {
             console.log(err)
@@ -66,9 +68,11 @@ const PlantContainer = (props) => {
             })
             const parsedResponse = await apiResponse.json();
             console.log(parsedResponse);
-            if (parsedResponse.success) {
-            // if (parsedResponse) {
+            // console.log(parsedResponse.success);
+            // if (parsedResponse.success) {
+            if (parsedResponse) {
                 const newPlants = props.plants.filter(plant => plant.id !== idToDelete);
+                console.log(newPlants)
                 props.setPlants(newPlants);
             } else {
                 console.log(`Unable to delete Plant #${idToDelete}`)
@@ -86,6 +90,7 @@ const PlantContainer = (props) => {
             {/* Buttons for New Plant, Plant Graveyard */}
             <div className="btn-section plants">
                 <PlantNew
+                    key={`new-plant`}
                     createNewPlant={createNewPlant}
                     newPlantServerError={newPlantServerError}
                     setNewPlantServerError={setNewPlantServerError}

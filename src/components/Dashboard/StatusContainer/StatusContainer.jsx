@@ -37,12 +37,13 @@ const StatusContainer = (props) => {
             })
             const parsedResponse = await apiResponse.json();
             console.log(parsedResponse);
-            if (parsedResponse.success) {
-            // if (parsedResponse) {
+            // console.log(parsedResponse.success);
+            // if (parsedResponse.success) {
+            if (parsedResponse) {
                 props.setAllStatus([...props.allStatus, newStatus]);
             } else {
-                setNewStatusServerError(parsedResponse.data);
-                // setNewStatusServerError(parsedResponse);
+                // setNewStatusServerError(parsedResponse.data);
+                setNewStatusServerError(parsedResponse);
             }
         } catch (err) {
             console.log(err)
@@ -61,13 +62,14 @@ const StatusContainer = (props) => {
             })
             const parsedResponse = await apiResponse.json();
             console.log(parsedResponse)
-            if (parsedResponse.success) {
-            // if (parsedResponse) {
+            // console.log(parsedResponse.success);
+            // if (parsedResponse.success) {
+            if (parsedResponse) {
                 const newStatus = props.allStatus.map(status => status.id === idToUpdate ? statusToUpdate : status)
                 props.setAllStatus(newStatus)
             } else {
-                props.setRequestError(parsedResponse.data);
-                // props.setRequestError(parsedResponse);
+                // props.setRequestError(parsedResponse.data);
+                props.setRequestError(parsedResponse);
             }
         } catch (err) {
             console.log(err)
@@ -83,8 +85,9 @@ const StatusContainer = (props) => {
             })
             const parsedResponse = await apiResponse.json();
             console.log(parsedResponse);
-            if (parsedResponse.success) {
-            // if (parsedResponse) {
+            // console.log(parsedResponse.success);
+            // if (parsedResponse.success) {
+            if (parsedResponse) {
                 const newStatus = props.allStatus.filter(status => status.id !== idToDelete);
                 props.setAllStatus(newStatus);
             } else {

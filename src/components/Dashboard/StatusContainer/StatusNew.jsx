@@ -55,6 +55,7 @@ const StatusNew = (props) =>{
             <PlantModal isOpen={showing}>
                 <div className="new-plant-form">
                     <button onClick={toggleShowing} className="outline-btn">X</button>
+                    <p className='required-text'><span className='required-field'>* <span className='small-text'>required</span></span></p>
                     <form onSubmit={submitNewStatus}>
                         {isValidState.valid ? null : <p className='form-error'>{isValidState.message}</p>}
                         {props.newStatusServerError ? <p className='form-error'>{props.newStatusServerError}</p> : null}
@@ -62,13 +63,11 @@ const StatusNew = (props) =>{
                         <label htmlFor="plant">New Status for Plant:<span className='required-field'>*</span></label>
                         <select onChange={handleInputChange} name="plant" required value={newStatus.plant}>
                             <option value="" disabled>-Select-</option>
-                            {props.plants.map((plant) => {
-                                return <option value={plant.id}>{plant.name} - {plant.room}</option>
-                            })}
+                            {props.plants.map(plant => <option value={plant.id}>{plant.name} - {plant.room}</option>)}
                         </select>
                         {/* CREATED */}
                         <label htmlFor="created">Date:</label>
-                        <input type="text" name="created" value={newStatus.created} placeholder="MM/DD/YYYY"/>
+                        <input onChange={handleInputChange} type="text" name="created" value={newStatus.created} placeholder="MM/DD/YYYY"/>
                         {/* HEALTH */}
                         <label htmlFor="health">Plant Health:<span className='required-field'>*</span></label>
                         <select onChange={handleInputChange} name="health" required value={newStatus.health}>
