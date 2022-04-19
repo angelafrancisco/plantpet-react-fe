@@ -34,11 +34,11 @@ Hosted via Heroku: https://plantpet.herokuapp.com/
 
 - Homepage shows app features and links to login or register an account.
     - _(Note: Currently user register/login not in production. Register/Login buttons will take you to the user dashboard.)_
-- User can create a new account and login.
+- User can navigate to register or login pages.
 - User can add plants to their "My Plants" section, creating a name, adding plant type, image url, room name, window direction, and notes about plant.
 - Once a plant is added, user can edit or delete plant.
 - User can complete watering tasks in their "My Tasks" section, as they are auto-generated after creating a new plant.
-- User can add a plant status for any plant, adding status date, plant health (poor/good/excellent), and notes.
+- User can add a new status to their "Plant Status" section, creating a health status update for any current plant, adding status date, plant health (poor/good/excellent), and notes.
 
 
 ## Wireframing
@@ -58,6 +58,8 @@ Hosted via Heroku: https://plantpet.herokuapp.com/
 - A full-stack application (React + Python/Django)
 - MVC file structure: Models, Views, Controllers (Note: React is views)
 - At least one new model with full CRUD
+    - First model: Plant
+    - Second model: Status
 - At least three react components, besides App.js
 - Deployed online and accessible to the public via Heroku
 - Two git repositories, one for backend and one for frontend
@@ -69,9 +71,10 @@ Hosted via Heroku: https://plantpet.herokuapp.com/
 
 - Wireframing (created via Figma)
 - Favicon/Logo
-- Plant modals (add new plant / edit plant)
+- Plant modal display (for add new plant/status or edit plant/status)
 - Plant default image, if no image url given
-- Form dropdown menus
+    - Default images for task and status
+- Form dropdown menus (plant: window direction, status: plant name)
 - React routing:
     - Homepage: `'/'`
     - Login: `'/login'`
@@ -94,10 +97,10 @@ These are additions I wasn't able to get to within project timeframe, but want t
     - Create new user
     - Update/Delete user account
     - User login/logout (username/password authentication)
-- Search functionality for user added plants
-- Upcoming Tasks React component
-- Plant image upload via Cloudinary
+- Search functionality for plants
 - Sort plants and tasks by room name or alphabetical
+- Toggle between tasks of "Today" and "Upcoming Tasks"
+- Plant image upload via Cloudinary
 
 
 ## Credits
