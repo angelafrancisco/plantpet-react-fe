@@ -20,9 +20,11 @@ Hosted via Heroku: https://plantpet.herokuapp.com/
 - HTML | CSS | Javascript
 - React
 - Python | Django
+- PostgreSQL
 
 
 ## Repositories
+
 - PlantPet React + Django full-stack app:
     - Front-End: https://github.com/angelafrancisco/plantpet-react-fe
     - Back-End: https://github.com/angelafrancisco/plantpet-django-be
@@ -83,6 +85,7 @@ Hosted via Heroku: https://plantpet.herokuapp.com/
 
 
 ## Future Goals
+
 These are additions I wasn't able to get to within project timeframe, but want to implement in the future:
 
 - Responsive Design
@@ -101,6 +104,13 @@ These are additions I wasn't able to get to within project timeframe, but want t
 - Sort plants and tasks by room name or alphabetical
 - Toggle between tasks of "Today" and "Upcoming Tasks"
 - Plant image upload via Cloudinary
+
+## Other Notes
+
+- Status Model: 
+    - Originally I wanted to make a secondary page (via React Router) that displayed one plant, and all status for that plant. I found this to be a much more difficult approach as it prevented the new page and components from being related to Dashboard and I was unable to pass props to an unrelated component sucessfully. I ended up duplicating api fetch calls and it felt overly redundant, so I ended up manually migrating all my new code to be similarly formatted on the Dashboard as the plant model.
+- Other Issues: 
+    - Because I took a previous project and translated the backend from Node/Express to Python/Django, I ran into several issues with translating React/JavaScript on the frontend. I was able to successfully send CRUD to the database but had to do a lot of testing, debugging and console logging to isolate where the issue was. As it turned out I still had a specific conditional statement that was specific to Express, but was rendering as undefined with Django.
 
 
 ## Credits
