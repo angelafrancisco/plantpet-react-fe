@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/header';
 import Footer from './components/footer';
 import Home from './components/Home/Home';
@@ -16,6 +16,7 @@ function App() {
   // user backend not complete, useState will act as temporary login
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
+    <BrowserRouter>
       <div className="App">
         <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}></Header>
         <Routes>
@@ -26,6 +27,7 @@ function App() {
         </Routes>
         <Footer></Footer>
       </div>
+    </BrowserRouter>
   );
 }
 

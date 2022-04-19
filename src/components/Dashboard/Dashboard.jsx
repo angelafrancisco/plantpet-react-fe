@@ -16,9 +16,8 @@ const Dashboard = () => {
             try {
                 const apiResponse = await fetch(`${apiUrl}/api/plants/`);
                 const parsedResponse = await apiResponse.json();
-                // setPlants(parsedResponse.data);
                 setPlants(parsedResponse);
-                console.log(parsedResponse);
+                // console.log(parsedResponse);
             } catch (err) {
                 console.log(err);
             }
@@ -32,9 +31,8 @@ const Dashboard = () => {
             try {
                 const apiResponse = await fetch(`${apiUrl}/api/status/`);
                 const parsedResponse = await apiResponse.json();
-                // setAllStatus(statusParsedResponse.data);
                 setAllStatus(parsedResponse);
-                console.log(parsedResponse);
+                // console.log(parsedResponse);
             } catch (err) {
                 console.log(err);
             }
@@ -45,7 +43,7 @@ const Dashboard = () => {
     return (
         <>
             <Hero></Hero>
-            <div className="content-wrapper">
+            <div className="content-wrapper top">
                 <TaskContainer
                     key={`tasks-container`}
                     plants={plants}
@@ -57,9 +55,13 @@ const Dashboard = () => {
                     key={`plants-container`}
                     plants={plants} 
                     setPlants={setPlants}
+                    allStatus={allStatus}
+                    setAllStatus={setAllStatus}
                     requestError={requestError}
                     setRequestError={setRequestError}
                 ></PlantContainer>
+            </div>
+            <div className="content-wrapper status">
                 <StatusContainer
                     key={`status-container`}
                     plants={plants}

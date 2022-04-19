@@ -5,24 +5,6 @@ import StatusIndex from "./StatusIndex";
 
 const StatusContainer = (props) => {
     const [newStatusServerError, setNewStatusServerError] = useState("");
-    // const [singlePlantStatus, setSinglePlantStatus] = useState([]);
-
-// // GET 1 PLANT + ITS STATUS
-//     useEffect(()=>{
-//         const getPlantDetails = async () => {
-//             try {
-//                 const plantApiResponse = await fetch(`${apiUrl}/plants/${id}`);
-//                 const parsedPlantResponse = await plantApiResponse.json();
-//                 setPlant(parsedPlantResponse);
-//             } catch (err) {
-//                 console.log(err);
-//             }
-//         }
-//         getPlantDetails()
-//         if(allStatus){
-//             setSinglePlantStatus(allStatus.filter(status => status.plant === parseInt(id)))
-//         }
-//     }, [allStatus, id])
 
 // == CREATE STATUS =========================================================================== //
     const createNewStatus = async (newStatus) => {
@@ -35,15 +17,10 @@ const StatusContainer = (props) => {
                 }
             })
             const parsedResponse = await apiResponse.json();
-            console.log(parsedResponse);
-            if (parsedResponse.success) {
-            // if (parsedResponse) {
-                props.setAllStatus([...props.allStatus, newStatus]);
-            } else {
-                // setNewStatusServerError(parsedResponse.data);
-                setNewStatusServerError(parsedResponse);
-            }
+            // console.log(parsedResponse);
+            props.setAllStatus([...props.allStatus, parsedResponse]);
         } catch (err) {
+            setNewStatusServerError(err)
             console.log(err)
         }
     }
@@ -51,57 +28,41 @@ const StatusContainer = (props) => {
 // == UPDATE STATUS ============================================================================================ //
     const updateStatus = async (idToUpdate, statusToUpdate) => {
         try {
-            const apiResponse = await fetch(`${apiUrl}/api/status/${idToUpdate}/`, {
+            await fetch(`${apiUrl}/api/status/${idToUpdate}/`, {
                 method: "PUT",
                 body: JSON.stringify(statusToUpdate),
                 headers: {
                     "Content-Type": "application/json"
                 }
             })
-            const parsedResponse = await apiResponse.json();
-            console.log(parsedResponse)
-            // console.log(parsedResponse.success);
-            if (parsedResponse.success) {
-            // if (parsedResponse) {
-                const newStatus = props.allStatus.map(status => status.id === idToUpdate ? statusToUpdate : status)
-                props.setAllStatus(newStatus)
-            } else {
-                // props.setRequestError(parsedResponse.data);
-                props.setRequestError(parsedResponse);
-            }
+            const newStatus = props.allStatus.map(status => status.id === idToUpdate ? statusToUpdate : status)
+            props.setAllStatus(newStatus)
         } catch (err) {
+            props.setRequestError(err)
             console.log(err)
         }
-        console.log(`Updating Status # ${idToUpdate}`);
+        // console.log(`Updating Status # ${idToUpdate}`);
     }
 
 // == DELETE STATUS =============================================================================================== //
     const deleteStatus = async (idToDelete) => {
         try {
-            const apiResponse = await fetch(`${apiUrl}/api/status/${idToDelete}/`, {
+            await fetch(`${apiUrl}/api/status/${idToDelete}/`, {
                 method: "DELETE"
             })
-            const parsedResponse = await apiResponse.json();
-            console.log(parsedResponse);
-            // console.log(parsedResponse.success);
-            if (parsedResponse.success) {
-            // if (parsedResponse) {
-                const newStatus = props.allStatus.filter(status => status.id !== idToDelete);
-                props.setAllStatus(newStatus);
-            } else {
-                console.log(`Unable to delete Status #${idToDelete}`)
-            }
+            const newStatus = props.allStatus.filter(status => status.id !== idToDelete);
+            props.setAllStatus(newStatus);
         } catch (err) {
             console.log(err);
+            console.log(`Unable to delete Status #${idToDelete}`)
         }
-        console.log(`Deleting Status ID# ${idToDelete}`);
     }
 
     return (
-        <div className="plant-container">
-            <h2 className="section-header plants">Plant Status</h2>
+        <div className="task-container">
+            <h2 className="section-header task">Plant Status</h2>
             {/* Button for New Status */}
-            <div className="btn-section plants">
+            <div className="btn-section task">
                 <StatusNew
                     key={`status-new`}
                     plants={props.plants}
@@ -112,7 +73,7 @@ const StatusContainer = (props) => {
             </div>
             {/* Section displaying Status Index */}
             {props.allStatus.length > 0 ?
-                <div className="grid-container plants">
+                <div className="grid-container task">
                     {props.allStatus.map((status) =>{
                         return <StatusIndex
                             key={status.id}
@@ -124,7 +85,7 @@ const StatusContainer = (props) => {
                     })}
                 </div>
             :
-                <div className="grid-container plants">
+                <div className="grid-container task">
                     <div className="message-box">
                         <h3 className="message-text">Looks like you haven't added any plant statuses!</h3>
                     </div>

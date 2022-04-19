@@ -6,7 +6,7 @@ const PlantTasks = (props) => {
     return (
             <div className="plant-index-container">
             {/* if time, add a specific task image to display here */}
-            <div className="plant-index-img task" style={{ backgroundImage: `url(${props.plant.image || "./images/default-plant.png"})` }}></div>
+            <div className="plant-index-img task" style={{ backgroundImage: `url("./images/default-task.png")` }}></div>
                 <div className="plant-index-box">
                     <div className="plant-index-text-box">
                         <h3 className="plant-text-name">Plant: {props.plant.name}</h3>

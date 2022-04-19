@@ -16,14 +16,11 @@ const TaskContainer = (props) => {
                 }
             })
             const parsedResponse = await apiResponse.json();
-            console.log(parsedResponse);
-            // console.log(parsedResponse.success);
-            // if (parsedResponse.success) {
+            // console.log(parsedResponse);
             if (parsedResponse) {
                 const newPlants = props.plants.map(plant => plant.id === idToUpdate ? taskToUpdate : plant)
                 props.setPlants(newPlants)
             } else {
-                // props.setRequestError(parsedResponse.data);
                 props.setRequestError(parsedResponse);
             }
         } catch (err) {

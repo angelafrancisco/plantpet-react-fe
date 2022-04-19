@@ -18,7 +18,6 @@ const PlantIndex = (props) => {
     const submitUpdatePlant = (e) => {
         e.preventDefault();
         props.updatePlant(props.plant.id, updatePlant);
-        // console.log(props.updatePlant(props.plant.id, updatePlant))
         setShowing(false);
     }
 

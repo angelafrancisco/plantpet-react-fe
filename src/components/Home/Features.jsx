@@ -14,7 +14,7 @@ const Features = () => {
                     <div className="feature-img photo">
                         <img src="/images/02-plant-feature.png" alt="photo icon" />
                     </div>
-                    <h4 className="feature-title">Plant Identification</h4>
+                    <h4 className="feature-title">Log Plant Status</h4>
                     <p className="feature-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam magni iusto soluta impedit vero accusantium modi inventore dolores ducimus!</p>
                 </div>
                 <div className="single-feature-box">

@@ -17,18 +17,11 @@ const PlantContainer = (props) => {
                     "Content-Type": "application/json"
                 }
             })
-            // debugger
             const parsedResponse = await apiResponse.json();
-            console.log(parsedResponse); 
-            if (parsedResponse.success) { // this does not render new plant until refresh pg
-            // if (parsedResponse) { // this does render plant, but it hasn't been sent to database
-                // debugger
-                props.setPlants([...props.plants, parsedResponse]); 
-                console.log(props.setPlants([...props.plants, parsedResponse])); // this is returning 'undefined'
-            } else {
-                setNewPlantServerError(parsedResponse);
-            }
+            // console.log(parsedResponse); 
+            props.setPlants([...props.plants, parsedResponse]); 
         } catch (err) {
+            setNewPlantServerError(err)
             console.log(err);
         }
     }
@@ -36,56 +29,46 @@ const PlantContainer = (props) => {
 // == UPDATE PLANT ========================================================================================== //
     const updatePlant = async (idToUpdate, plantToUpdate) => {
         try {
-            const apiResponse = await fetch(`${apiUrl}/api/plants/${idToUpdate}/`, {
+            await fetch(`${apiUrl}/api/plants/${idToUpdate}/`, {
                 method: "PUT",
                 body: JSON.stringify(plantToUpdate),
                 headers: {
                     "Content-Type": "application/json"
                 }
             })
-            // debugger
-            const parsedResponse = await apiResponse.json();
-            console.log(parsedResponse)
-            // console.log(parsedResponse.success);
-            if (parsedResponse.success) {
-            // if (parsedResponse) {
-                const newPlants = props.plants.map(plant => plant.id === idToUpdate ? plantToUpdate : plant)
-                console.log(newPlants)
-                props.setPlants(newPlants)
-            } else {
-                // props.setRequestError(parsedResponse.data);
-                props.setRequestError(parsedResponse);
-            }
+            const newPlants = props.plants.map(plant => plant.id === idToUpdate ? plantToUpdate : plant)
+            // console.log(newPlants)
+            props.setPlants(newPlants)
         } catch (err) {
+            props.setRequestError(err);
             console.log(err)
         }
-        console.log(`Updating ${plantToUpdate.name} Plant # ${idToUpdate}`);
+        // console.log(`Updating ${plantToUpdate.name} Plant # ${idToUpdate}`);
     }
 
 // == DELETE PLANT ========================================================================================== //
     const deletePlant = async (idToDelete) => {
         try {
-            const apiResponse = await fetch(`${apiUrl}/api/plants/${idToDelete}/`, {
+            const searchStatusToDelete = props.allStatus.filter(status => status.plant === idToDelete)
+            await fetch(`${apiUrl}/api/plants/${idToDelete}/`, {
                 method: "DELETE"
             })
-            // debugger
-            const parsedResponse = await apiResponse.json();
-            console.log(parsedResponse);
-            // console.log(parsedResponse.success);
-            if (parsedResponse.success) {
-            // if (parsedResponse) {
-                const newPlants = props.plants.filter(plant => plant.id !== idToDelete);
-                console.log(newPlants)
-                props.setPlants(newPlants);
-            } else {
-                props.setRequestError(parsedResponse);
-                console.log(`Unable to delete Plant #${idToDelete}`)
+            if(searchStatusToDelete?.length > 0){
+                const newStatus = props.allStatus.filter(status => {
+                    return searchStatusToDelete.some(statusToDelete => {
+                        return status.id !== statusToDelete.id
+                    })
+                });
+                props.setAllStatus(newStatus);
             }
+            const newPlants = props.plants.filter(plant => plant.id !== idToDelete);
+            // console.log(newPlants)
+            props.setPlants(newPlants);
         } catch (err) {
+            props.setRequestError(err)
             console.log(err);
-            // props.setRequestError(err.message)
+            console.log(`Unable to delete Plant #${idToDelete}`)
         }
-        console.log(`Deleting plant ID# ${idToDelete}`);
     }
 
     return (

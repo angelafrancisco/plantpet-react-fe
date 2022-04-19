@@ -1,6 +1,13 @@
 .content-wrapper {
     padding-bottom: 300px;
 }
+.content-wrapper.top {
+    padding-bottom: 0;
+    justify-content: left;
+}
+.content-wrapper.status{
+    justify-content: left;
+}
 
 .section-header {
     color: var(--header-color);

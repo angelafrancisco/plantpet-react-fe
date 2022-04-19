@@ -22,14 +22,16 @@ const StatusIndex = (props) =>{
     }
     // function to search through all plants, match plant.id = status.plant and return plant name
     const findLinkedPlantName = (statusPlantId)=> {
-        return props.plants.filter(plant => plant.id === statusPlantId).map(selectedPlant => <h3 className="plant-text-name">Plant: {selectedPlant.name}</h3>)
+        if (props.plants.length > 0){
+            const filteredPlants = props.plants.filter(plant => plant.id === statusPlantId)
+            return <h3 className="plant-text-name">Plant: {filteredPlants[0]?.name || ""}</h3>
+        }
     }
-    // console.log(findLinkedPlantName)
     
     return (
         <div className="plant-index-container">
-            {/* To do: add status image here */}
-            {/* <div className="plant-index-img" style={{ backgroundImage: `url("./images/default-plant.png")` }}></div> */}
+            {/* To do: add a static status image here */}
+            <div className="plant-index-img task" style={{ backgroundImage: `url("./images/default-status.png")` }}></div>
             <div className="plant-index-box">
                 <div className="plant-index-text-box">
                     {findLinkedPlantName(props.status.plant)}

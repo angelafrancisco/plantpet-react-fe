@@ -24,7 +24,6 @@ const StatusNew = (props) =>{
     const submitNewStatus = (e) => {
         e.preventDefault()
         let validSubmission = true;
-        // if (newStatus.length < 2) {
         if (!newStatus.plant || !newStatus.created || !newStatus.health) {
             setIsValidState({
                 valid: false,
@@ -58,7 +57,7 @@ const StatusNew = (props) =>{
                         <label htmlFor="plant">New Status for Plant:<span className='required-field'>*</span></label>
                         <select onChange={handleInputChange} name="plant" required value={newStatus.plant}>
                             <option value="" disabled>-Select-</option>
-                            {props.plants.map(plant => <option value={plant.id}>{plant.name} - {plant.room}</option>)}
+                            {props.plants.map(plant => <option key={plant.id} value={plant.id}>{plant.name} - {plant.room}</option>)}
                         </select>
                         {/* CREATED */}
                         <label htmlFor="created">Date:</label>
